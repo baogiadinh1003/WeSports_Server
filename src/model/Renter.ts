@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
 
-export type renterDocument = mongoose.Document & {
+interface Renter { 
+    renterUsername: string;
     renterName: string;
     renterPhone: string;
     renterEmail: string;
@@ -9,53 +9,19 @@ export type renterDocument = mongoose.Document & {
     renterPassword: string;
     accountStatus: number;
     renterDateRegister: string;
-    // passwordResetToken: string;
-    // passwordResetExpires: Date;
-    // tokens: AuthToken[];
+}
 
-    comparePassword: comparePasswordFunction;
-};
-
-type comparePasswordFunction = (candidatePassword: string, cb: (err: any, isMatch: any) => void) => void;
-
-const renterSchema = new mongoose.Schema<renterDocument>(
+const renterSchema = new mongoose.Schema<Renter>(
     {
-        renterName: {type: String, unique: true},
-        renterPhone: {type: String, unique: true},
-        renterEmail: {type: String, unique: true},
-        renterFbUrl: {type: String, unique: true},
-        renterPassword: {type: String, unique: true},
-        accountStatus: {type: Number, unique: true, default: 1},
-        renterDateRegister: {type: String, unique: true}
+        renterUsername: {type: String, unique: true, required: true},
+        renterName: {type: String, unique:false, required: true},
+        renterPhone: {type: String, unique: true, required: true},
+        renterEmail: {type: String, unique: true, required: true},
+        renterFbUrl: {type: String, unique: true, required: true},
+        renterPassword: {type: String, unique:false, required: true},
+        accountStatus: {type: Number, unique:false, default: 1, required: true},
+        renterDateRegister: {type: String, required: true}
     }
 );
 
-/**
- * Password hash middleware.
- */
-renterSchema.pre("save", function save(next) {
-    const renter = this as renterDocument;
-    if (!renter.isModified("renterPassword")) {
-        return next();
-    } 
-    bcrypt.genSalt(10, (err, salt) => {
-        if (err) {
-            return next(err);
-        }
-        bcrypt.hash(renter.renterPassword, salt, undefined, (err: mongoose.Error, hash) => {
-            if (err) { return next(err); }
-            renter.renterPassword = hash;
-            next();
-        });
-    })
-})
-
-const comparePassword: comparePasswordFunction = function (candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, (err: mongoose.Error, isMatch: boolean) => {
-        cb(err, isMatch);
-    });
-};
-
-renterSchema.methods.comparePassword = comparePassword;
-
-export const Renter = mongoose.model<renterDocument>("Renter", renterSchema);
+export const Renter = mongoose.model<Renter>("Renter", renterSchema);
