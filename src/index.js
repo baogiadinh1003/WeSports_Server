@@ -11,14 +11,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
 connectDatabase();
 
 const version = '/v1/';
-const renterEntity = 'renter/'
 
+//Renter router
+const renterEntity = "renter/";
 app.post(version + renterEntity + 'login', (req, res) => {
    renterRouter.renterLogin(req, res);
 });
-
 app.post(version + renterEntity + "register", (req, res) => {
   renterRouter.renterRegister(req, res);
+});
+app.get(version + renterEntity + "list", (req, res) => {
+  renterRouter.renterList(req, res);
+});
+app.post(version + renterEntity + "update", (req, res) => {
+  renterRouter.renterUpdate(req, res);
+});
+app.post(version + renterEntity + "delete", (req, res) => {
+  renterRouter.renterDelete(req, res);
 });
 
 app.listen(3000, () => {
