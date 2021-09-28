@@ -11,5 +11,11 @@
     "strict": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
-  }
+  },
+  "include": [
+    "./src/config/*",
+    "./src/controller/*",
+    "./src/model/*",
+    "./src/routers/*"
+  ],
 }
