@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const mongo_uri = "mongodb+srv://BaoDPG1:WeSpot2021@clusterinit.kgrtq.mongodb.net/WeSpot?retryWrites=true&w=majority";
+const mongo_uri =
+  "mongodb+srv://BaoDPG1:WeSpot2021@clusterinit.kgrtq.mongodb.net/WeSpot?retryWrites=true&w=majority";
 
 const connectDatabase = () => {
   // Connecting to the database
@@ -11,11 +12,11 @@ const connectDatabase = () => {
     .then(() => {
       console.log("Successfully connected to database");
     })
-    .catch((error:Error) => {
+    .catch((error: Error) => {
       console.log("Database connection failed. exiting now...");
       console.error(error);
       process.exit(1);
     });
 };
 
-export {connectDatabase};
+export { connectDatabase };
