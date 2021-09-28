@@ -68,6 +68,12 @@ const validatePhone = (inp: String) => {
     return false;
 }
 
+/**
+ * function check validate email
+ * 
+ * @param inp 
+ * @returns 
+ */
 const validateEmail = (inp: String) => {
     if (inp.match(EMAIL_REGEX)) {
         return true;
@@ -75,4 +81,4 @@ const validateEmail = (inp: String) => {
     return false;
 }
 
-export {validateDate, validateAccountStatus, validatePhone};
+export {validateDate, validateAccountStatus, validatePhone, validateEmail};
