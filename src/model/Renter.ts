@@ -1,17 +1,7 @@
 import mongoose from "mongoose";
+import * as type from "../type/type";
 
-interface Renter {
-  renterUsername: string;
-  renterName: string;
-  renterPhone: string;
-  renterEmail: string;
-  renterFbUrl: string;
-  renterPassword: string;
-  accountStatus: number;
-  renterDateRegister: string;
-}
-
-const renterSchema = new mongoose.Schema<Renter>({
+const renterSchema = new mongoose.Schema<type.renter>({
   renterUsername: { type: String, unique: true, required: true },
   renterName: { type: String, unique: false, required: true },
   renterPhone: { type: String, unique: true, required: true },
@@ -22,4 +12,4 @@ const renterSchema = new mongoose.Schema<Renter>({
   renterDateRegister: { type: String, required: true },
 });
 
-export const Renter = mongoose.model<Renter>("Renter", renterSchema);
+export const Renter = mongoose.model<type.renter>("Renter", renterSchema);
