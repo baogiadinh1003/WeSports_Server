@@ -12,6 +12,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 connectDatabase();
 
 const version = '/v1/';
+//Empty router
+app.post("/", (req, res) => {
+  console.log("RUN");
+});
 
 //Renter router
 const renterEntity = "renter/";
@@ -37,7 +41,7 @@ app.post(version + adminEntity + 'login', (req, res) => {
   adminRouter.adminLogin(req, res);
 })
 
-app.listen(3000, () => {
+app.listen(process.env.API_URL || 3000, () => {
   console.log(`Server running on port 3000`);
 });
 
