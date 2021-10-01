@@ -13,7 +13,7 @@ connectDatabase();
 
 const version = "/v1/";
 //Empty router
-app.post("/", (req, res) => {
+app.post("/", (req: express.Request, res: express.Response) => {
   console.log("RUN");
 });
 
