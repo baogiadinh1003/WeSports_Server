@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { connectDatabase } from "./config/database.ts";
 import * as renterRouter from './routers/renterRouters.ts';
+import * as adminRouter from './routers/adminRouters.ts';
 const app = express();
 // server listening 
 app.set("port", process.env.PORT || 3000);
@@ -29,6 +30,12 @@ app.post(version + renterEntity + "update", (req, res) => {
 app.post(version + renterEntity + "delete", (req, res) => {
   renterRouter.renterDelete(req, res);
 });
+
+//Admin router
+const adminEntity = "admin/";
+app.post(version + adminEntity + 'login', (req, res) => {
+  adminRouter.adminLogin(req, res);
+})
 
 app.listen(3000, () => {
   console.log(`Server running on port 3000`);
