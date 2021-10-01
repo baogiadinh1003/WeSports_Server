@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es5",
     "lib": ["es6"],
     "module": "commonjs",
+    "target": "es2020",
     "rootDir": "src",
     "resolveJsonModule": true,
     "allowJs": true,
