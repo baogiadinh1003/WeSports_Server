@@ -7,6 +7,9 @@ import { PHONE_REGEX, EMAIL_REGEX } from "./const";
  * @returns boolean
  */
 const validateDate = (inp: String) => {
+  if (isEmpty(inp)) {
+    return false;
+  }
   let arrDateInfo = inp.split("-");
   let nYear = arrDateInfo[2];
   let nMonth = arrDateInfo[1];
@@ -46,6 +49,9 @@ const validateDate = (inp: String) => {
  * @returns boolean
  */
 const validateAccountStatus = (inp: String | Number) => {
+  if (isEmpty(inp)) {
+    return false;
+  }
   inp = Number(inp);
 
   if (inp !== 1 && inp !== 2) {
@@ -62,6 +68,9 @@ const validateAccountStatus = (inp: String | Number) => {
  * @returns boolean
  */
 const validatePhone = (inp: String) => {
+  if (isEmpty(inp)) {
+    return false;
+  }
   if (inp.match(PHONE_REGEX)) {
     return true;
   }
@@ -75,10 +84,26 @@ const validatePhone = (inp: String) => {
  * @returns
  */
 const validateEmail = (inp: String) => {
+  if (isEmpty(inp)) {
+    return false;
+  }
+
   if (inp.match(EMAIL_REGEX)) {
     return true;
   }
   return false;
 };
 
+/**
+ * Check empty item
+ * 
+ * @param inp 
+ * @returns 
+ */
+const isEmpty = (inp: any) => {
+  if (inp === null || inp === undefined) {
+    return true;
+  }
+  return false
+};
 export { validateDate, validateAccountStatus, validatePhone, validateEmail };
