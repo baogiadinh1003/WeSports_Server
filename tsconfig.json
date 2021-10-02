@@ -13,9 +13,9 @@
     "skipLibCheck": true,
   },
   "include": [
-    "./src/config/*",
-    "./src/controller/*",
-    "./src/model/*",
-    "./src/routers/*"
+    "src/**/*.ts" /* Include every ts file in source folder */
   ],
+  "exclude": [
+    "node_modules" /* exclude everything in  node_modules */
+  ]
 }
