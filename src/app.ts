@@ -13,6 +13,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 connectDatabase();
 
+passport.serializeUser(function (user:any , done: any) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (user: any, done: any) {
+  done(null, user);
+});
+
 const version = "/v1/";
 //Empty router
 app.post("/", (req: express.Request, res: express.Response) => {
@@ -71,11 +79,10 @@ app.get("/auth/facebook", passport.authenticate("facebook"));
 app.get(
   "/auth/facebook/callback",
   passport.authenticate("facebook", {
+    successRedirect: "/v1/renter/list",
     failureRedirect: "/",
-  }),
-  (req: express.Request, res: express.Response) => {
-    res.redirect("/v1/renter/list");
-  }
+    session: false,
+  })
 );
 //Admin router
 const adminEntity = "admin/";
