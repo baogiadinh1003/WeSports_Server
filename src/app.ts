@@ -94,9 +94,9 @@ app.get("/", (req: express.Request, res: express.Response) => {
 app.get("/auth/facebook", passport.authenticate("facebook"));
 app.get(
   "/auth/facebook/callback",
-  passport.authenticate("facebook", (req: any, res:any) => {
+  passport.authenticate("facebook", (req: any, res: express.Response) => {
     console.log(req);
-    return res.redirect("/v1/renter/list")
+    res.redirect("/v1/renter/list");
   })
 );
 
