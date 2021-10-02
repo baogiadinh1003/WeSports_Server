@@ -3,13 +3,11 @@ import bodyParser from "body-parser";
 import { connectDatabase } from "./config/database";
 import * as renterRouter from "./routers/renterRouters";
 import * as adminRouter from "./routers/adminRouters";
-import passport = require("passport");
 import session = require("express-session");
+import passport = require("passport");
 import * as FacebookStrategy from "passport-facebook";
 const app = express();
 // server listening
-app.use(passport.initialize());
-app.use(passport.session());
 app.set("trust proxy", 1); // trust first proxy
 app.use(
   session({
@@ -19,18 +17,34 @@ app.use(
     cookie: { secure: true },
   })
 );
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
-connectDatabase();
-
-passport.serializeUser(function (user:any , done: any) {
+passport.serializeUser(function (user: any, done: any) {
   done(null, user);
 });
 
 passport.deserializeUser(function (user: any, done: any) {
   done(null, user);
 });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+passport.use(
+  new FacebookStrategy.Strategy(
+    {
+      clientID: "919890271989593",
+      clientSecret: "d50b8603f878892121ccd74278a16dee",
+      callbackURL: "https://we-sports-sv.herokuapp.com/auth/facebook/callback",
+    },
+    (accessToken: any, refreshToken: any, profile: any, cb: any) => {
+      return cb(null, profile);
+    }
+  )
+);
+
+connectDatabase();
 
 const version = "/v1/";
 //Empty router
@@ -52,6 +66,8 @@ app.post(
     renterRouter.renterRegister(req, res);
   }
 );
+console.log("a");
+    
 app.get(
   version + renterEntity + "list",
   (req: express.Request, res: express.Response) => {
@@ -69,18 +85,6 @@ app.post(
   (req: express.Request, res: express.Response) => {
     renterRouter.renterDelete(req, res);
   }
-);
-passport.use(
-  new FacebookStrategy.Strategy(
-    {
-      clientID: "919890271989593",
-      clientSecret: "d50b8603f878892121ccd74278a16dee",
-      callbackURL: "https://we-sports-sv.herokuapp.com/auth/facebook/callback",
-    },
-    (accessToken: any, refreshToken: any, profile: any, cb: any) => {
-      return cb(null, profile);
-    }
-  )
 );
 
 app.get("/", (req: express.Request, res: express.Response) => {
