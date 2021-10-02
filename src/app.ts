@@ -74,7 +74,7 @@ app.get(
     failureRedirect: "/",
   }),
   (req: express.Request, res: express.Response) => {
-    res.sendStatus(200).send("OK");
+    res.redirect("/v1/renter/list");
   }
 );
 //Admin router
