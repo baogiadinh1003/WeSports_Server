@@ -68,7 +68,6 @@ app.post(
     renterRouter.renterRegister(req, res);
   }
 );
-console.log("a");
     
 app.get(
   version + renterEntity + "list",
@@ -95,10 +94,9 @@ app.get("/", (req: express.Request, res: express.Response) => {
 app.get("/auth/facebook", passport.authenticate("facebook"));
 app.get(
   "/auth/facebook/callback",
-  passport.authenticate("facebook", {
-    successRedirect: "/v1/renter/list",
-    failureRedirect: "/",
-    session: false,
+  passport.authenticate("facebook", (req: any, res:any) => {
+    console.log(req);
+    return res.redirect("/v1/renter/list")
   })
 );
 
