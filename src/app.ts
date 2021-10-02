@@ -64,6 +64,9 @@ passport.use(
   )
 );
 
+app.get("/", (req: express.Request, res: express.Response) => {
+  return res.status(200).send("LOGIN FB OK");
+});
 app.get("/auth/facebook", passport.authenticate("facebook"));
 app.get(
   "/auth/facebook/callback",
