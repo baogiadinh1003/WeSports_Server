@@ -1,6 +1,5 @@
 import * as ownerController from "../controller/OwnerController";
 import express from "express";
-const app = express();
 
 export const ownerLogin = (req: express.Request, res: express.Response) => {
   return ownerController.postLogin(req, res);

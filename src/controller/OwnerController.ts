@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import mongoose from "mongoose";
 import { Owner } from "../model/Owner";
 import {
   validateDate,

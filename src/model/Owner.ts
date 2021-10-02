@@ -1,16 +1,7 @@
 import mongoose from "mongoose";
+import * as type from "../type/type";
 
-interface Owner {
-  ownerUsername: string;
-  ownerName: string;
-  ownerPassword: string;
-  ownerPhone: string;
-  ownerFbUrl: string;
-  ownerAddress: string;
-  accountStatus: number;
-}
-
-const ownerSchema = new mongoose.Schema<Owner>({
+const ownerSchema = new mongoose.Schema<type.Owner>({
   ownerUsername: { type: String, unique: true, required: true },
   ownerName: { type: String, unique: false, required: true },
   ownerPassword: { type: String, unique: true, required: true },
@@ -18,7 +9,7 @@ const ownerSchema = new mongoose.Schema<Owner>({
   ownerFbUrl: { type: String, unique: true, required: true },
   ownerAddress: { type: String, unique: false, required: true },
   accountStatus: { type: Number, unique: false, default: 1, required: true },
-
+  ownerDateRegister: { type: String }
 });
 
-export const Owner = mongoose.model<Owner>("Owner", ownerSchema);
+export const Owner = mongoose.model<type.Owner>("Owner", ownerSchema);

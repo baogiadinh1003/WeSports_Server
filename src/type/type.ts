@@ -13,3 +13,14 @@ export type renter = {
   accountStatus: number;
   renterDateRegister: string;
 };
+
+export type Owner = {
+  ownerUsername: string;
+  ownerName: string;
+  ownerPassword: string;
+  ownerPhone: string;
+  ownerFbUrl: string;
+  ownerAddress: string;
+  accountStatus: number;
+  ownerDateRegister: string;
+};
