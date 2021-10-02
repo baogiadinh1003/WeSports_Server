@@ -99,7 +99,7 @@ app.get(
     session: false,
   }),
   (req, res) => {
-    console.log(req);
+    console.log(req.user);
     res.redirect('/v1/renter/list/');
   }
 );
