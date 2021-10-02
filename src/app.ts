@@ -59,6 +59,6 @@ app.post(
   }
 );
 
-app.listen(process.env.API_URL || 3000, () => {
-  console.log(`Server is running`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server is running on post: ${process.env.PORT}`);
 });
