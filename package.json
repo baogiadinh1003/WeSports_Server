@@ -4,6 +4,8 @@
     "@types/express": "^4.17.13",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^16.10.1",
+    "@types/passport": "^1.0.7",
+    "@types/passport-facebook": "^2.1.11",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^10.0.0",
@@ -20,9 +22,5 @@
   "scripts": {
     "start": "nodemon -x ts-node src/app.ts",
     "dev": "nodemon -x ts-node src/app.ts"
-  },
-  "devDependencies": {
-    "@types/passport": "^1.0.7",
-    "@types/passport-facebook": "^2.1.11"
   }
 }
