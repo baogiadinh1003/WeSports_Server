@@ -39,6 +39,8 @@ passport.use(
       callbackURL: "https://we-sports-sv.herokuapp.com/auth/facebook/callback",
     },
     (accessToken: any, refreshToken: any, profile: any, cb: any) => {
+      console.log(profile);
+      
       return cb(null, profile);
     }
   )
