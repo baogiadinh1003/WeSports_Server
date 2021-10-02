@@ -4,10 +4,21 @@ import { connectDatabase } from "./config/database";
 import * as renterRouter from "./routers/renterRouters";
 import * as adminRouter from "./routers/adminRouters";
 import passport = require("passport");
+import session = require("express-session");
 import * as FacebookStrategy from "passport-facebook";
 const app = express();
 // server listening
 app.use(passport.initialize());
+app.use(passport.session());
+app.set("trust proxy", 1); // trust first proxy
+app.use(
+  session({
+    secret: "fb login",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -84,6 +95,7 @@ app.get(
     session: false,
   })
 );
+
 //Admin router
 const adminEntity = "admin/";
 app.post(
