@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import { connectDatabase } from "./config/database";
 import * as renterRouter from "./routers/renterRouters";
 import * as adminRouter from "./routers/adminRouters";
-import * as passport from "passport";
+import passport = require("passport");
 import * as FacebookStrategy from "passport-facebook";
 const app = express();
 // server listening
