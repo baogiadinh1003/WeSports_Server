@@ -3,9 +3,11 @@ import bodyParser from "body-parser";
 import { connectDatabase } from "./config/database";
 import * as renterRouter from "./routers/renterRouters";
 import * as adminRouter from "./routers/adminRouters";
+import * as passport from "passport";
+import * as FacebookStrategy from "passport-facebook";
 const app = express();
 // server listening
-app.set("port", process.env.PORT || 3000);
+app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -49,7 +51,24 @@ app.post(
     renterRouter.renterDelete(req, res);
   }
 );
+passport.use(
+  new FacebookStrategy.Strategy({
+    clientID: "919890271989593",
+    clientSecret: "d50b8603f878892121ccd74278a16dee",
+    callbackURL: "https://we-sports-sv.herokuapp.com/auth/facebook/callback",
+  },
+  (accessToken, refreshToken, profile, cb) => {
+    return cb(null, profile);
+  }
+  )
+);
 
+app.get('/auth/facebook')
+app.get("/auth/facebook/callback", passport.authenticate("facebook", {
+  failureRedirect:"/"
+}), (req: express.Request, res: express.Response) => {
+  res.sendStatus(200).send("OK");
+});
 //Admin router
 const adminEntity = "admin/";
 app.post(
