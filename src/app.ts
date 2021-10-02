@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import { connectDatabase } from "./config/database";
 import * as renterRouter from "./routers/renterRouters";
 import * as adminRouter from "./routers/adminRouters";
+import * as ownerRouter from "./routers/ownerRouters";
 import session = require("express-session");
 import passport = require("passport");
 import * as FacebookStrategy from "passport-facebook";
@@ -103,6 +104,24 @@ app.get(
     res.redirect('/v1/renter/list/');
   }
 );
+
+//Owner router
+const ownerEntity = "owner/";
+app.post(version + ownerEntity + 'login', (req, res) => {
+    ownerRouter.ownerLogin(req, res);
+});
+app.post(version + ownerEntity + "register", (req, res) => {
+    ownerRouter.ownerRegister(req, res);
+});
+app.get(version + ownerEntity + "list", (req, res) => {
+    ownerRouter.ownerList(req, res);
+});
+app.post(version + ownerEntity + "update", (req, res) => {
+    ownerRouter.ownerUpdate(req, res);
+});
+app.post(version + ownerEntity + "delete", (req, res) => {
+    ownerRouter.ownerDelete(req, res);
+});
 
 //Admin router
 const adminEntity = "admin/";
