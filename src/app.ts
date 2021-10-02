@@ -94,10 +94,14 @@ app.get("/", (req: express.Request, res: express.Response) => {
 app.get("/auth/facebook", passport.authenticate("facebook"));
 app.get(
   "/auth/facebook/callback",
-  passport.authenticate("facebook", (req: any, res: express.Response) => {
+  passport.authenticate("facebook", {
+    failureRedirect: "/",
+    session: false,
+  }),
+  (req, res) => {
     console.log(req);
-    res.redirect("/v1/renter/list");
-  })
+    res.redirect('/v1/renter/list/');
+  }
 );
 
 //Admin router
@@ -110,5 +114,5 @@ app.post(
 );
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is running on post: ${process.env.PORT}`);
+  console.log(`Server is running`);
 });
