@@ -16,7 +16,7 @@ export const postLogin = async (req: Request, res: Response) => {
     renterUsername: req.body.renterUsername,
     renterPassword: req.body.renterPassword,
   });
-  return renter === null || undefined
+  return renter === null || renter === undefined
     ? res.status(200).send("Fail login")
     : res.status(200).send(renter);
 };
