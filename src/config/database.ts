@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const mongo_uri =
-  "mongodb+srv://admin2:admin2@cluster0.wawvx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+  "mongodb+srv://BaoDPG1:WeSpot2021@clusterinit.kgrtq.mongodb.net/WeSpot?retryWrites=true&w=majority";
 
 const connectDatabase = () => {
   // Connecting to the database
