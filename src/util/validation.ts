@@ -60,6 +60,24 @@ const validateAccountStatus = (inp: String | Number) => {
     return true;
   }
 };
+/**
+ * Function check validate for pitch status
+ *
+ * @param inp
+ * @returns boolean
+ */
+const validatePitchStatus = (inp: String | Number) => {
+  if (isEmpty(inp)) {
+    return false;
+  }
+  inp = Number(inp);
+
+  if (inp !== 1 && inp !== 2 && inp !== 3) {
+    return false;
+  } else {
+    return true;
+  }
+};
 
 /**
  * function check validate phone
@@ -106,4 +124,4 @@ const isEmpty = (inp: any) => {
   }
   return false
 };
-export { validateDate, validateAccountStatus, validatePhone, validateEmail };
+export { validateDate, validateAccountStatus,validatePitchStatus, validatePhone, validateEmail };
