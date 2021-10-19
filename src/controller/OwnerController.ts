@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { Owner } from "../model/Owner";
 import {
-  validateDate,
   validateAccountStatus,
   validatePhone,
 } from "../util/validation";
@@ -22,7 +21,7 @@ export const postLogin = async (req: Request, res: Response) => {
 
 /**
  * Register account
- * @route POST /login
+ * @route POST /register
  */
 export const postRegister = async (req: Request, res: Response) => {
   if (
@@ -97,6 +96,6 @@ export const postDeleteOwner = (req: Request, res: Response) => {
     });
     return res.status(200).send("0");
   } catch (error) {
-    return res.sendStatus(500).send("Update error");
+    return res.sendStatus(500).send("Delete error");
   }
 };

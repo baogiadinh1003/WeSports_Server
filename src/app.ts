@@ -4,6 +4,7 @@ import { connectDatabase } from "./config/database";
 import * as renterRouter from "./routers/renterRouters";
 import * as adminRouter from "./routers/adminRouters";
 import * as ownerRouter from "./routers/ownerRouters";
+import * as pitchRouter from "./routers/pitchRouters";
 import session = require("express-session");
 import passport = require("passport");
 import * as FacebookStrategy from "passport-facebook";
@@ -134,4 +135,25 @@ app.post(
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server is running`);
+});
+
+//Pitch router
+const pitchEntity = "pitch/";
+app.post(version + pitchEntity + 'add', (req, res) => {
+    pitchRouter.pitchAdd(req, res);
+});
+app.get(version + pitchEntity + "list", (req, res) => {
+    pitchRouter.pitchList(req, res);
+});
+app.get(version + pitchEntity + "item", (req, res) => {
+  pitchRouter.pitchItem(req, res);
+});
+app.get(version + pitchEntity + "listbyowner", (req, res) => {
+  pitchRouter.pitchListByOwner(req, res);
+});
+app.post(version + pitchEntity + "update", (req, res) => {
+    pitchRouter.pitchUpdate(req, res);
+});
+app.post(version + pitchEntity + "delete", (req, res) => {
+    pitchRouter.pitchDelete(req, res);
 });
