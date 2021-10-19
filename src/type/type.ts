@@ -14,7 +14,7 @@ export type renter = {
   renterDateRegister: string;
 };
 
-export type Owner = {
+export type owner = {
   ownerUsername: string;
   ownerName: string;
   ownerPassword: string;
@@ -23,4 +23,14 @@ export type Owner = {
   ownerAddress: string;
   accountStatus: number;
   ownerDateRegister: string;
+};
+import mongoose from "mongoose";
+export type pitch = {
+  pitchName: string;
+  pitchPrice: number;
+  pitchMaxSize: number;
+  pitchAddress: string;
+  pitchStatus: number;
+  pitchTimeRent: string;
+  pitchOwner: {type:mongoose.Schema.Types.ObjectId,ref:'Owner'};
 };
