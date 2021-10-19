@@ -24,3 +24,10 @@ export type Owner = {
   accountStatus: number;
   ownerDateRegister: string;
 };
+
+export type address = {
+  addressCity: string;
+  addressDistrict: string;
+  addressCommune: string;
+  addressDetail: string;
+};
