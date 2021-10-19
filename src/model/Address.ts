@@ -8,4 +8,4 @@ const addressSchema = new mongoose.Schema<type.address>({
   addressDetail: { type: String, required: true }
 });
 
-export const Address = mongoose.model<type.address>("Address", addressSchema);
+export const Address = mongoose.model<type.address>("Addresses", addressSchema);

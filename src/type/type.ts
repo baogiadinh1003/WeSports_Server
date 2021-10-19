@@ -38,7 +38,7 @@ export type pitch = {
   pitchName: string;
   pitchPrice: number;
   pitchMaxSize: number;
-  pitchAddress: string;
+  pitchAddress: { type: mongoose.Schema.Types.ObjectId; ref: "Addresses" };
   pitchStatus: number;
   pitchTimeRent: string;
   pitchOwner: { type: mongoose.Schema.Types.ObjectId; ref: "Owner" };

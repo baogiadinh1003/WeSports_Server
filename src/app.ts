@@ -41,8 +41,6 @@ passport.use(
       callbackURL: "https://we-sports-sv.herokuapp.com/auth/facebook/callback",
     },
     (accessToken: any, refreshToken: any, profile: any, cb: any) => {
-      console.log(profile);
-      
       return cb(null, profile);
     }
   )
@@ -53,7 +51,6 @@ connectDatabase();
 const version = "/v1/";
 //Empty router
 app.post("/", (req: express.Request, res: express.Response) => {
-  console.log("RUN");
 });
 
 //Renter router
@@ -101,7 +98,6 @@ app.get(
     session: false,
   }),
   (req, res) => {
-    console.log(req.user);
     res.redirect('/v1/renter/list/');
   }
 );
@@ -133,10 +129,6 @@ app.post(
   }
 );
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is running`);
-});
-
 //Pitch router
 const pitchEntity = "pitch/";
 app.post(version + pitchEntity + 'add', (req, res) => {
@@ -156,4 +148,8 @@ app.post(version + pitchEntity + "update", (req, res) => {
 });
 app.post(version + pitchEntity + "delete", (req, res) => {
     pitchRouter.pitchDelete(req, res);
+});
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server is running`);
 });
