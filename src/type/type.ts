@@ -1,6 +1,8 @@
+import mongoose from "mongoose";
+
 export type admin = {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 };
 
 export type renter = {
@@ -24,13 +26,20 @@ export type owner = {
   accountStatus: number;
   ownerDateRegister: string;
 };
-import mongoose from "mongoose";
+
+export type address = {
+  addressCity: string;
+  addressDistrict: string;
+  addressCommune: string;
+  addressDetail: string;
+};
+
 export type pitch = {
   pitchName: string;
   pitchPrice: number;
   pitchMaxSize: number;
-  pitchAddress: string;
+  pitchAddress: { type: mongoose.Schema.Types.ObjectId; ref: "Addresses" };
   pitchStatus: number;
   pitchTimeRent: string;
-  pitchOwner: {type:mongoose.Schema.Types.ObjectId,ref:'Owner'};
+  pitchOwner: { type: mongoose.Schema.Types.ObjectId; ref: "Owner" };
 };

@@ -74,8 +74,6 @@ export const postUpdateOwner = async (req: Request, res: Response) => {
     }
     return res.status(200).send("0");
   } catch (error) {
-    console.log(error);
-
     return res.sendStatus(500).send("Update error");
   }
 };
