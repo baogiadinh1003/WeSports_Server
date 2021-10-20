@@ -10,7 +10,10 @@ export const pitchList = (req: express.Request, res: express.Response) => {
 export const pitchItem = (req: express.Request, res: express.Response) => {
   return pitchController.getById(req, res);
 };
-export const pitchListByOwner = (req: express.Request, res: express.Response) => {
+export const pitchListByOwner = (
+  req: express.Request,
+  res: express.Response
+) => {
   return pitchController.getAllPitchByOwner(req, res);
 };
 

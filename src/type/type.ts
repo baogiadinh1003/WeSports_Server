@@ -43,3 +43,8 @@ export type pitch = {
   pitchTimeRent: string;
   pitchOwner: { type: mongoose.Schema.Types.ObjectId; ref: "Owner" };
 };
+
+export type blackList = {
+  accountId?: { type: mongoose.Schema.Types.ObjectId };
+  violateTimes?: Number;
+};

@@ -50,8 +50,7 @@ connectDatabase();
 
 const version = "/v1/";
 //Empty router
-app.post("/", (req: express.Request, res: express.Response) => {
-});
+app.post("/", (req: express.Request, res: express.Response) => {});
 
 //Renter router
 const renterEntity = "renter/";
@@ -67,7 +66,7 @@ app.post(
     renterRouter.renterRegister(req, res);
   }
 );
-    
+
 app.get(
   version + renterEntity + "list",
   (req: express.Request, res: express.Response) => {
@@ -98,26 +97,26 @@ app.get(
     session: false,
   }),
   (req, res) => {
-    res.redirect('/v1/renter/list/');
+    res.redirect("/v1/renter/list/");
   }
 );
 
 //Owner router
 const ownerEntity = "owner/";
-app.post(version + ownerEntity + 'login', (req, res) => {
-    ownerRouter.ownerLogin(req, res);
+app.post(version + ownerEntity + "login", (req, res) => {
+  ownerRouter.ownerLogin(req, res);
 });
 app.post(version + ownerEntity + "register", (req, res) => {
-    ownerRouter.ownerRegister(req, res);
+  ownerRouter.ownerRegister(req, res);
 });
 app.get(version + ownerEntity + "list", (req, res) => {
-    ownerRouter.ownerList(req, res);
+  ownerRouter.ownerList(req, res);
 });
 app.post(version + ownerEntity + "update", (req, res) => {
-    ownerRouter.ownerUpdate(req, res);
+  ownerRouter.ownerUpdate(req, res);
 });
 app.post(version + ownerEntity + "delete", (req, res) => {
-    ownerRouter.ownerDelete(req, res);
+  ownerRouter.ownerDelete(req, res);
 });
 
 //Admin router
@@ -131,11 +130,11 @@ app.post(
 
 //Pitch router
 const pitchEntity = "pitch/";
-app.post(version + pitchEntity + 'add', (req, res) => {
-    pitchRouter.pitchAdd(req, res);
+app.post(version + pitchEntity + "add", (req, res) => {
+  pitchRouter.pitchAdd(req, res);
 });
 app.get(version + pitchEntity + "list", (req, res) => {
-    pitchRouter.pitchList(req, res);
+  pitchRouter.pitchList(req, res);
 });
 app.get(version + pitchEntity + "item", (req, res) => {
   pitchRouter.pitchItem(req, res);
@@ -144,10 +143,10 @@ app.get(version + pitchEntity + "listbyowner", (req, res) => {
   pitchRouter.pitchListByOwner(req, res);
 });
 app.post(version + pitchEntity + "update", (req, res) => {
-    pitchRouter.pitchUpdate(req, res);
+  pitchRouter.pitchUpdate(req, res);
 });
 app.post(version + pitchEntity + "delete", (req, res) => {
-    pitchRouter.pitchDelete(req, res);
+  pitchRouter.pitchDelete(req, res);
 });
 
 app.listen(process.env.PORT || 3000, () => {

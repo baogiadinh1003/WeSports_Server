@@ -13,10 +13,7 @@ export const addAddress = async (data: address) => {
   }
 };
 
-export const updateAddress = async (
-  id: any,
-  data: address
-) => {
+export const updateAddress = async (id: any, data: address) => {
   try {
     let rs = await Address.findByIdAndUpdate(id, data, { new: false });
     return rs;
@@ -26,6 +23,6 @@ export const updateAddress = async (
 };
 
 export const getAddressWithFilter = async (filter: Object) => {
-    let addresses = await Address.find(filter);
-    return addresses;
+  let addresses = await Address.find(filter);
+  return addresses;
 };

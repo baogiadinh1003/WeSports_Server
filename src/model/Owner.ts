@@ -9,7 +9,7 @@ const ownerSchema = new mongoose.Schema<type.owner>({
   ownerFbUrl: { type: String, unique: true, required: false },
   ownerAddress: { type: String, unique: false, required: true },
   accountStatus: { type: Number, unique: false, default: 1, required: true },
-  ownerDateRegister: { type: String }
+  ownerDateRegister: { type: String },
 });
 
 export const Owner = mongoose.model<type.owner>("Owner", ownerSchema);

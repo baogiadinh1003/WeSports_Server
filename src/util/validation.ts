@@ -60,6 +60,7 @@ const validateAccountStatus = (inp: String | Number) => {
     return true;
   }
 };
+
 /**
  * Function check validate for pitch status
  *
@@ -114,14 +115,20 @@ const validateEmail = (inp: String) => {
 
 /**
  * Check empty item
- * 
- * @param inp 
- * @returns 
+ *
+ * @param inp
+ * @returns
  */
 const isEmpty = (inp: any) => {
   if (inp === null || inp === undefined) {
     return true;
   }
-  return false
+  return false;
 };
-export { validateDate, validateAccountStatus,validatePitchStatus, validatePhone, validateEmail };
+export {
+  validateDate,
+  validateAccountStatus,
+  validatePitchStatus,
+  validatePhone,
+  validateEmail,
+};

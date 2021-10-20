@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
 import { Owner } from "../model/Owner";
-import {
-  validateAccountStatus,
-  validatePhone,
-} from "../util/validation";
+import { validateAccountStatus, validatePhone } from "../util/validation";
 
 /**
  * Login in using username.
