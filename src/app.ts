@@ -5,6 +5,8 @@ import * as renterRouter from "./routers/renterRouters";
 import * as adminRouter from "./routers/adminRouters";
 import * as ownerRouter from "./routers/ownerRouters";
 import * as pitchRouter from "./routers/pitchRouters";
+import * as blackListRouter from "./routers/blackListRouters";
+import * as mail from "./util/mail";
 import session = require("express-session");
 import passport = require("passport");
 import * as FacebookStrategy from "passport-facebook";
@@ -52,7 +54,7 @@ const version = "/v1/";
 //Empty router
 app.post("/", (req: express.Request, res: express.Response) => {});
 
-//Renter router
+/*--------------------------- RENTER API ---------------------------*/
 const renterEntity = "renter/";
 app.post(
   version + renterEntity + "login",
@@ -60,6 +62,7 @@ app.post(
     renterRouter.renterLogin(req, res);
   }
 );
+
 app.post(
   version + renterEntity + "register",
   (req: express.Request, res: express.Response) => {
@@ -73,23 +76,29 @@ app.get(
     renterRouter.renterList(req, res);
   }
 );
+
 app.post(
   version + renterEntity + "update",
   (req: express.Request, res: express.Response) => {
     renterRouter.renterUpdate(req, res);
   }
 );
+
 app.post(
   version + renterEntity + "delete",
   (req: express.Request, res: express.Response) => {
     renterRouter.renterDelete(req, res);
   }
 );
+/*--------------------------- RENTER API ---------------------------*/
 
+/*------------------------- FACEBOOK API ---------------------------*/
 app.get("/", (req: express.Request, res: express.Response) => {
   return res.status(200).send("LOGIN FB OK");
 });
+
 app.get("/auth/facebook", passport.authenticate("facebook"));
+
 app.get(
   "/auth/facebook/callback",
   passport.authenticate("facebook", {
@@ -100,26 +109,32 @@ app.get(
     res.redirect("/v1/renter/list/");
   }
 );
+/*------------------------- FACEBOOK API ---------------------------*/
 
-//Owner router
+/*--------------------------- OWNER API ----------------------------*/
 const ownerEntity = "owner/";
 app.post(version + ownerEntity + "login", (req, res) => {
   ownerRouter.ownerLogin(req, res);
 });
+
 app.post(version + ownerEntity + "register", (req, res) => {
   ownerRouter.ownerRegister(req, res);
 });
+
 app.get(version + ownerEntity + "list", (req, res) => {
   ownerRouter.ownerList(req, res);
 });
+
 app.post(version + ownerEntity + "update", (req, res) => {
   ownerRouter.ownerUpdate(req, res);
 });
+
 app.post(version + ownerEntity + "delete", (req, res) => {
   ownerRouter.ownerDelete(req, res);
 });
+/*--------------------------- OWNER API ----------------------------*/
 
-//Admin router
+/*--------------------------- ADMIN API ----------------------------*/
 const adminEntity = "admin/";
 app.post(
   version + adminEntity + "login",
@@ -127,28 +142,55 @@ app.post(
     adminRouter.adminLogin(req, res);
   }
 );
+/*--------------------------- ADMIN API ----------------------------*/
 
-//Pitch router
+/*--------------------------- PITCH API ----------------------------*/
 const pitchEntity = "pitch/";
 app.post(version + pitchEntity + "add", (req, res) => {
   pitchRouter.pitchAdd(req, res);
 });
+
 app.get(version + pitchEntity + "list", (req, res) => {
   pitchRouter.pitchList(req, res);
 });
+
 app.get(version + pitchEntity + "item", (req, res) => {
   pitchRouter.pitchItem(req, res);
 });
+
 app.get(version + pitchEntity + "listbyowner", (req, res) => {
   pitchRouter.pitchListByOwner(req, res);
 });
+
 app.post(version + pitchEntity + "update", (req, res) => {
   pitchRouter.pitchUpdate(req, res);
 });
+
 app.post(version + pitchEntity + "delete", (req, res) => {
   pitchRouter.pitchDelete(req, res);
 });
+/*--------------------------- PITCH API ----------------------------*/
 
+/*------------------------- BLACKLIST API --------------------------*/
+const blacklistEntity = "blacklist/";
+app.get(version + blacklistEntity + "list", (req, res) => {
+  blackListRouter.blackList(req, res);
+});
+/*------------------------- BLACKLIST API --------------------------*/
+
+
+/*------------------------ SEND MAIL VERIFY ------------------------*/
+app.post("/sendmail", (req, res) => {
+  mail.sendMail(req, res);
+});
+
+app.get("/verify?", (req, res) => {
+  mail.verifyEmail(req, res);
+});
+/*------------------------ SEND MAIL VERIFY ------------------------*/
+
+/*---------------------------- RUN HOST ----------------------------*/
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server is running`);
 });
+/*---------------------------- RUN HOST ----------------------------*/

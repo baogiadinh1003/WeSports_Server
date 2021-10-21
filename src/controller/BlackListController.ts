@@ -1,7 +1,7 @@
 import { BlackList } from "../model/BlackList";
+import express from "express";
 import { blackList } from "../type/type";
-import { Renter } from "../model/Renter";
-import { Owner } from "../model/Owner";
+import { classifyAccount } from "../util/common";
 
 export const addToBlackList = async (id: any) => {
   if (id === null) {
@@ -10,7 +10,7 @@ export const addToBlackList = async (id: any) => {
   let blackList = await BlackList.findOne({ accountId: id });
   let rs: blackList = {};
   if (blackList === null) {
-    let newBlackListItem = new BlackList({ accountId: id, violateTimes: 1 });
+    let newBlackListItem = new BlackList({ accountId: id, violateTimes: 0 });
     try {
       rs = await newBlackListItem.save();
     } catch (error) {
@@ -19,7 +19,7 @@ export const addToBlackList = async (id: any) => {
   } else {
     let times = Number(blackList.violateTimes) + 1;
     try {
-      await blackList.update({ violateTimes: times });
+      await blackList.updateOne({ violateTimes: times });
     } catch (error) {
       return false;
     }
@@ -29,7 +29,7 @@ export const addToBlackList = async (id: any) => {
     let account = await classifyAccount(rs.accountId);
     if (account !== false) {
       try {
-        await account.update({ accountStatus: 3 });
+        await account.updateOne({ accountStatus: 3 });
       } catch (error) {
         return false;
       }
@@ -40,17 +40,10 @@ export const addToBlackList = async (id: any) => {
   return true;
 };
 
-const classifyAccount = async (id: any) => {
-  if (id === undefined) {
-    return false;
-  }
-  let rsRenter = await Renter.findById(id);
-  if (rsRenter !== null) {
-    return rsRenter;
-  }
-  let rsOwner = await Owner.findById(id);
-  if (rsOwner !== null) {
-    return rsOwner;
-  }
-  return false;
+export const getAccountInBlackList = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  let blacklist = await BlackList.find({});
+  return res.status(200).send(blacklist);
 };

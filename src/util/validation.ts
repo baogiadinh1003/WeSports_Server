@@ -54,7 +54,7 @@ const validateAccountStatus = (inp: String | Number) => {
   }
   inp = Number(inp);
 
-  if (inp !== 1 && inp !== 2) {
+  if (inp !== 1 && inp !== 2 && inp !== 3) {
     return false;
   } else {
     return true;
