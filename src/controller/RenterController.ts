@@ -14,11 +14,11 @@ import {
 export const postLogin = async (req: Request, res: Response) => {
   let renter = await Renter.findOne({
     renterUsername: req.body.renterUsername,
-    renterPassword: req.body.renterPassword,
+    renterPassword: req.body.renterPassword
   });
   return renter === null || renter === undefined
     ? res.status(200).send("Fail login")
-    : res.status(200).send(renter);
+    : renter.accountStatus === 3? res.status(200).send("Account has been banned") : res.status(200).send(renter);
 };
 
 /**

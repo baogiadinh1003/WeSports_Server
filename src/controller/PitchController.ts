@@ -115,11 +115,7 @@ export const postUpdatePitch = async (req: Request, res: Response) => {
     }
 
     req.body.pitchAddress = rs._id;
-    let result = await pitch.update(req.body, { new: false });
-    if (result === null || result === undefined) {
-      return res.status(200).send("1");
-    }
-
+    await pitch.updateOne(req.body, { new: false });
     return res.status(200).send("0");
   } catch (error) {
     return res.sendStatus(500).send("Update error");
