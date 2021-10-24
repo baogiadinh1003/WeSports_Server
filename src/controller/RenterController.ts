@@ -14,11 +14,15 @@ import {
 export const postLogin = async (req: Request, res: Response) => {
   let renter = await Renter.findOne({
     renterUsername: req.body.renterUsername,
-    renterPassword: req.body.renterPassword
+    renterPassword: req.body.renterPassword,
   });
   return renter === null || renter === undefined
     ? res.status(200).send("Fail login")
-    : renter.accountStatus === 3? res.status(200).send("Account has been banned") : res.status(200).send(renter);
+    : renter.accountStatus === 2
+    ? res.status(200).send(renter)
+    : renter.accountStatus === 1
+    ? res.status(200).send("Account non verify email")
+    : res.status(200).send("Account has been banned");
 };
 
 /**
@@ -102,4 +106,12 @@ export const postDeleteRenter = (req: Request, res: Response) => {
   } catch (error) {
     return res.sendStatus(500).send("Update error");
   }
+};
+
+export const getOneRenter = async (req: Request, res: Response) => {
+  let renter = await Renter.findById(req.body.id);
+  if (renter === null) {
+    return res.status(200).send("Renter not found");
+  }
+  return res.status(200).send(renter);
 };

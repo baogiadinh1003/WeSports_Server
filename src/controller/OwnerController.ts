@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
 import { Owner } from "../model/Owner";
-import { validateAccountStatus, validatePhone } from "../util/validation";
+import {
+  validateAccountStatus,
+  validatePhone,
+  validateEmail,
+} from "../util/validation";
+import * as AddressFunc from "../controller/AddressController";
 
 /**
  * Login in using username.
@@ -12,8 +17,12 @@ export const postLogin = async (req: Request, res: Response) => {
     ownerPassword: req.body.ownerPassword,
   });
   return owner === null || undefined
-    ? res.status(200).send("Fail login")
-    : res.status(200).send(owner);
+    ? res.status(200).send("Sign in fail")
+    : owner.accountStatus === 2
+    ? res.status(200).send(owner)
+    : owner.accountStatus === 1
+    ? res.status(200).send("Account non verify email")
+    : res.status(200).send("Account has been banned");
 };
 
 /**
@@ -23,16 +32,24 @@ export const postLogin = async (req: Request, res: Response) => {
 export const postRegister = async (req: Request, res: Response) => {
   if (
     !validateAccountStatus(req.body.accountStatus) ||
-    !validatePhone(req.body.ownerPhone)
+    !validatePhone(req.body.ownerPhone) ||
+    !validateEmail(req.body.ownerEmail)
   ) {
     return res.status(400).send("Validation fail");
   }
+  let rs = await AddressFunc.addAddress(req.body.ownerAddress);
+  if (rs === false) {
+    return res.status(500).send("Add address error");
+  }
+  req.body.ownerAddress = rs._id;
   let owner = new Owner(req.body);
   try {
     let result = await owner.save();
     return res.status(200).send(result);
   } catch (error) {
-    return res.status(500).send("Sign in fail");
+    console.log(error);
+
+    return res.status(500).send("Sign up fail");
   }
 };
 
@@ -93,4 +110,13 @@ export const postDeleteOwner = (req: Request, res: Response) => {
   } catch (error) {
     return res.sendStatus(500).send("Delete error");
   }
+};
+
+export const getOneOwner = async (req: Request, res: Response) => {
+  let owner = await Owner.findById(req.body.id);
+  // console.log(owner instanceof type.owner);
+  if (owner === null) {
+    return res.status(200).send("Owner not found");
+  }
+  return res.status(200).send(owner);
 };

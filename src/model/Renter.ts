@@ -6,7 +6,7 @@ const renterSchema = new mongoose.Schema<type.renter>({
   renterName: { type: String, unique: false, required: true },
   renterPhone: { type: String, unique: true, required: true },
   renterEmail: { type: String, unique: true, required: true },
-  renterFbUrl: { type: String, unique: true, required: false },
+  renterFbUrl: { type: String, unique: true, required: false, sparse: true },
   renterPassword: { type: String, unique: false, required: true },
   accountStatus: { type: Number, unique: false, default: 1, required: true },
   renterDateRegister: { type: String, required: true },
