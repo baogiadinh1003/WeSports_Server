@@ -20,3 +20,7 @@ export const ownerUpdate = (req: express.Request, res: express.Response) => {
 export const ownerDelete = (req: express.Request, res: express.Response) => {
   return ownerController.postDeleteOwner(req, res);
 };
+
+export const ownerGetOne = (req: express.Request, res: express.Response) => {
+  return ownerController.getOneOwner(req, res);
+};

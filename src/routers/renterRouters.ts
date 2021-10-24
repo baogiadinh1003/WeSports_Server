@@ -20,3 +20,7 @@ export const renterUpdate = (req: express.Request, res: express.Response) => {
 export const renterDelete = (req: express.Request, res: express.Response) => {
   return renterController.postDeleteRenter(req, res);
 };
+
+export const renterGetOne = (req: express.Request, res: express.Response) => {
+  return renterController.getOneRenter(req, res);
+};

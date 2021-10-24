@@ -22,7 +22,8 @@ export type owner = {
   ownerPassword: string;
   ownerPhone: string;
   ownerFbUrl: string;
-  ownerAddress: string;
+  ownerEmail: string;
+  ownerAddress: { type: mongoose.Schema.Types.ObjectId; ref: "Addresses" };
   accountStatus: number;
   ownerDateRegister: string;
 };
@@ -47,4 +48,9 @@ export type pitch = {
 export type blackList = {
   accountId?: { type: mongoose.Schema.Types.ObjectId };
   violateTimes?: Number;
+};
+
+export type service = {
+  serviceName: string;
+  servicePrice: { type: Number; required: true };
 };

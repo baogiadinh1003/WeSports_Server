@@ -77,6 +77,13 @@ app.get(
   }
 );
 
+app.get(
+  version + renterEntity + "detail",
+  (req: express.Request, res: express.Response) => {
+    renterRouter.renterGetOne(req, res);
+  }
+);
+
 app.post(
   version + renterEntity + "update",
   (req: express.Request, res: express.Response) => {
@@ -123,6 +130,10 @@ app.post(version + ownerEntity + "register", (req, res) => {
 
 app.get(version + ownerEntity + "list", (req, res) => {
   ownerRouter.ownerList(req, res);
+});
+
+app.get(version + ownerEntity + "detail", (req, res) => {
+  ownerRouter.ownerGetOne(req, res);
 });
 
 app.post(version + ownerEntity + "update", (req, res) => {
@@ -178,7 +189,6 @@ app.get(version + blacklistEntity + "list", (req, res) => {
 });
 /*------------------------- BLACKLIST API --------------------------*/
 
-
 /*------------------------ SEND MAIL VERIFY ------------------------*/
 app.post("/sendmail", (req, res) => {
   mail.sendMail(req, res);
@@ -186,6 +196,10 @@ app.post("/sendmail", (req, res) => {
 
 app.get("/verify?", (req, res) => {
   mail.verifyEmail(req, res);
+});
+
+app.get("/resetpass?", (req,res) => {
+  mail.resetPass(req, res);
 });
 /*------------------------ SEND MAIL VERIFY ------------------------*/
 
