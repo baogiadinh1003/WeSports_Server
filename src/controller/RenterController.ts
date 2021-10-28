@@ -43,6 +43,7 @@ export const postRegister = async (req: Request, res: Response) => {
     let result = await renter.save();
     return res.status(200).send(result);
   } catch (error) {
+    log
     return res.status(500).send("Sign in fail");
   }
 };
