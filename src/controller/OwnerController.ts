@@ -17,9 +17,9 @@ export const postLogin = async (req: Request, res: Response) => {
     ownerPassword: req.body.ownerPassword,
   });
   return owner === null || undefined
-    ? res.status(200).send("Sign in fail")
+    ? res.status(200).send({ message: "Sign in fail" })
     : owner.accountStatus === 2
-    ? res.status(200).send(owner)
+    ? res.status(200).send({ message: "Sign in success", data: owner })
     : owner.accountStatus === 1
     ? res.status(200).send({
         message: `Account ${owner.ownerUsername} are not verify email yet`,
@@ -41,17 +41,15 @@ export const postRegister = async (req: Request, res: Response) => {
     !validatePhone(req.body.ownerPhone) ||
     !validateEmail(req.body.ownerEmail)
   ) {
-    return res.status(400).send("Validation fail");
+    return res.status(400).send({ message: "Validation fail" });
   }
   req.body.ownerDateRegister = new Date().toLocaleDateString();
   let owner = new Owner(req.body);
   try {
     let result = await owner.save();
-    return res.status(200).send(result);
+    return res.status(200).send({ message: "Sign up success", data: result });
   } catch (error) {
-    console.log(error);
-
-    return res.status(500).send("Sign up fail");
+    return res.status(500).send({ message: "Sign up fail" });
   }
 };
 
@@ -63,8 +61,14 @@ export const postRegister = async (req: Request, res: Response) => {
  * @returns
  */
 export const getAllOwner = async (req: Request, res: Response) => {
-  let owners = await Owner.find({});
-  return res.status(200).send(owners);
+  try {
+    let owners = await Owner.find({});
+    return res
+      .status(200)
+      .send({ message: "Get list owner success", data: owners });
+  } catch (error) {
+    return res.status(500).send({ message: "Get list owner error" });
+  }
 };
 
 /**
@@ -79,18 +83,18 @@ export const postUpdateOwner = async (req: Request, res: Response) => {
     !validateAccountStatus(req.body.accountStatus) ||
     !validatePhone(req.body.ownerPhone)
   ) {
-    return res.status(400).send("Validation fail");
+    return res.status(400).send({ message: "Validation fail" });
   }
   try {
     let owner = await Owner.findByIdAndUpdate(req.body._id, req.body, {
       new: false,
     });
     if (owner === null || owner === undefined) {
-      return res.status(200).send("1");
+      return res.status(200).send({ message: "Update error" });
     }
-    return res.status(200).send("0");
+    return res.status(200).send({ message: "Update success" });
   } catch (error) {
-    return res.sendStatus(500).send("Update error");
+    return res.status(500).send({ message: "Update error" });
   }
 };
 
@@ -117,7 +121,7 @@ export const postDeleteOwner = (req: Request, res: Response) => {
 export const getOneOwner = async (req: Request, res: Response) => {
   let owner = await Owner.findById(req.body.id);
   if (owner === null) {
-    return res.status(200).send("Owner not found");
+    return res.status(200).send({ message: "Owner not found" });
   }
-  return res.status(200).send(owner);
+  return res.status(200).send({ message: "Get owner success", data: owner });
 };

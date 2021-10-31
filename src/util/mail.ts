@@ -39,7 +39,7 @@ export const sendMail = (req: express.Request, res: express.Response) => {
     mailOptions,
     function (error: Error, response: express.Response) {
       if (error) {
-        return res.status(500).send("Send mail error");
+        return res.status(500).send({ message: "Send mail error" });
       } else {
         return res.status(200).send("1");
       }

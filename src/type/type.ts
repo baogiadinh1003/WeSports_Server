@@ -49,9 +49,15 @@ export type pitch = {
   };
 };
 
+export type report = {
+  accountReported: { type: mongoose.Schema.Types.ObjectId };
+  reporter: { type: mongoose.Schema.Types.ObjectId };
+  reason: { type: String; require: true };
+  violateTimes: Number;
+};
+
 export type blackList = {
-  accountId?: { type: mongoose.Schema.Types.ObjectId };
-  violateTimes?: Number;
+  accountId: { type: mongoose.Schema.Types.ObjectId };
 };
 
 export type services = {

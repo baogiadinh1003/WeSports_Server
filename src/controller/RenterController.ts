@@ -17,7 +17,7 @@ export const postLogin = async (req: Request, res: Response) => {
     renterPassword: req.body.renterPassword,
   });
   return renter === null || renter === undefined
-    ? res.status(200).send("Fail login")
+    ? res.status(200).send({ message: "Sign in fail" })
     : renter.accountStatus === 2
     ? res.status(200).send(renter)
     : renter.accountStatus === 1
@@ -42,15 +42,15 @@ export const postRegister = async (req: Request, res: Response) => {
     !validatePhone(req.body.renterPhone) ||
     !validateEmail(req.body.renterEmail)
   ) {
-    return res.status(400).send("Validation fail");
+    return res.status(400).send({ message: "Validation fail" });
   }
   req.body.renterDateRegister = new Date().toLocaleDateString();
   let renter = new Renter(req.body);
   try {
     let result = await renter.save();
-    return res.status(200).send(result);
+    return res.status(200).send({ message: "Sign up success", data: result });
   } catch (error) {
-    return res.status(500).send("Sign in fail");
+    return res.status(500).send({ message: "Sign up fail" });
   }
 };
 
@@ -62,8 +62,16 @@ export const postRegister = async (req: Request, res: Response) => {
  * @returns
  */
 export const getAllRenter = async (req: Request, res: Response) => {
-  let renters = await Renter.find({});
-  return res.status(200).send(renters);
+  try {
+    let renters = await Renter.find({});
+    return res
+      .status(200)
+      .send({ message: "Get all renter success", data: renters });
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ message: "Get all renter error"});
+  }
 };
 
 /**
@@ -80,18 +88,18 @@ export const postUpdateRenter = async (req: Request, res: Response) => {
     !validatePhone(req.body.renterPhone) ||
     !validateEmail(req.body.renterEmail)
   ) {
-    return res.status(400).send("Validation fail");
+    return res.status(400).send({message: "Validation fail"});
   }
   try {
     let renter = await Renter.findByIdAndUpdate(req.body._id, req.body, {
       new: false,
     });
     if (renter === null || renter === undefined) {
-      return res.status(200).send("1");
+      return res.status(200).send({message: "Update error"});
     }
-    return res.status(200).send("0");
+    return res.status(200).send({message: "Update success"});
   } catch (error) {
-    return res.sendStatus(500).send("Update error");
+    return res.sendStatus(500).send({message: "Update error"});
   }
 };
 
@@ -106,19 +114,19 @@ export const postDeleteRenter = (req: Request, res: Response) => {
   try {
     Renter.findByIdAndDelete(req.body._id, (err: Error, res: any) => {
       if (err) {
-        return res.status(200).send("1");
+        return res.status(200).send({ message: "Delete error" });
       }
     });
-    return res.status(200).send("0");
+    return res.status(200).send({ message: "Delete success" });
   } catch (error) {
-    return res.sendStatus(500).send("Update error");
+    return res.sendStatus(500).send({ message: "Delete error" });
   }
 };
 
 export const getOneRenter = async (req: Request, res: Response) => {
   let renter = await Renter.findById(req.body.id);
   if (renter === null) {
-    return res.status(200).send("Renter not found");
+    return res.status(200).send({ message: "Renter not found" });
   }
-  return res.status(200).send(renter);
+  return res.status(200).send({ message: "Get renter success", data: renter });
 };

@@ -6,11 +6,13 @@ import * as adminRouter from "./routers/adminRouters";
 import * as ownerRouter from "./routers/ownerRouters";
 import * as pitchRouter from "./routers/pitchRouters";
 import * as blackListRouter from "./routers/blackListRouters";
+import * as reportRouter from "./routers/reportRouters";
 import * as mail from "./util/mail";
 import session = require("express-session");
 import passport = require("passport");
 import * as FacebookStrategy from "passport-facebook";
 const app = express();
+
 // server listening
 app.set("trust proxy", 1); // trust first proxy
 app.use(
@@ -196,6 +198,21 @@ app.get(version + blacklistEntity + "list", (req, res) => {
   blackListRouter.blackList(req, res);
 });
 /*------------------------- BLACKLIST API --------------------------*/
+
+/*--------------------------- REPORT API ---------------------------*/
+const reportEntity = "report/";
+app.get(version + reportEntity + "list", (req, res) => {
+  reportRouter.reportList(req, res);
+});
+
+app.post(version + reportEntity + "add", (req, res) => {
+  reportRouter.addReport(req, res);
+});
+
+app.post(version + reportEntity + "update", (req, res) => {
+  reportRouter.updateReport(req, res);
+});
+/*--------------------------- REPORT API ---------------------------*/
 
 /*------------------------ SEND MAIL VERIFY ------------------------*/
 app.post("/sendmail", (req, res) => {
