@@ -21,8 +21,14 @@ export const postLogin = async (req: Request, res: Response) => {
     : owner.accountStatus === 2
     ? res.status(200).send(owner)
     : owner.accountStatus === 1
-    ? res.status(200).send("Account non verify email")
-    : res.status(200).send("Account has been banned");
+    ? res.status(200).send({
+        message: `Account ${owner.ownerUsername} are not verify email yet`,
+        _id: owner._id,
+      })
+    : res.status(200).send({
+        message: `Account ${owner.ownerUsername} has been banned`,
+        _id: owner._id,
+      });
 };
 
 /**
@@ -37,11 +43,7 @@ export const postRegister = async (req: Request, res: Response) => {
   ) {
     return res.status(400).send("Validation fail");
   }
-  let rs = await AddressFunc.addAddress(req.body.ownerAddress);
-  if (rs === false) {
-    return res.status(500).send("Add address error");
-  }
-  req.body.ownerAddress = rs._id;
+  req.body.ownerDateRegister = new Date().toLocaleDateString();
   let owner = new Owner(req.body);
   try {
     let result = await owner.save();
@@ -114,7 +116,6 @@ export const postDeleteOwner = (req: Request, res: Response) => {
 
 export const getOneOwner = async (req: Request, res: Response) => {
   let owner = await Owner.findById(req.body.id);
-  // console.log(owner instanceof type.owner);
   if (owner === null) {
     return res.status(200).send("Owner not found");
   }

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Pitch } from "../model/Pitch";
 import * as AddressFunc from "../controller/AddressController";
+import * as ServiceFunc from "../controller/ServiceController";
 import { validatePitchStatus } from "../util/validation";
 import { pitch } from "../type/type";
 
@@ -36,7 +37,8 @@ export const postAdd = async (req: Request, res: Response) => {
 export const getAllPitch = async (req: Request, res: Response) => {
   let pitchs = await Pitch.find({})
     .populate({ path: "pitchOwner" })
-    .populate({ path: "pitchAddress" });
+    .populate({ path: "pitchAddress" })
+    .populate({ path: "service" });
   if (req.body === null || req.body === undefined) {
     return res.status(200).send(pitchs);
   } else {
@@ -83,7 +85,8 @@ export const getAllPitchByOwner = async (req: Request, res: Response) => {
     pitchOwner: req.body.pitchOwner,
   })
     .populate({ path: "pitchOwner" })
-    .populate({ path: "pitchAddress" });
+    .populate({ path: "pitchAddress" })
+    .populate({ path: "service"});
   return res.status(200).send(pitchs);
 };
 
@@ -100,9 +103,8 @@ export const postUpdatePitch = async (req: Request, res: Response) => {
   }
   try {
     let pitch = await Pitch.findById(req.body._id);
-
     if (pitch === null) {
-      return res.sendStatus(500).send("Update error");
+      return res.status(500).send("Update error");
     }
 
     let rs = await AddressFunc.updateAddress(
@@ -118,7 +120,71 @@ export const postUpdatePitch = async (req: Request, res: Response) => {
     await pitch.updateOne(req.body, { new: false });
     return res.status(200).send("0");
   } catch (error) {
-    return res.sendStatus(500).send("Update error");
+    
+    console.log(error);
+    return res.status(500).send("Update error");
+  }
+};
+
+/**
+ * function add service
+ *
+ * @param req
+ * @param res
+ * @returns
+ */
+export const postAddPitchService = async (req: Request, res: Response) => {
+  try {
+    let pitch = await Pitch.findById(req.body._id);
+    if (pitch === null) {
+      return res.status(500).send("Update error");
+    }
+
+    let rs = await ServiceFunc.addServices(
+      req.body.service
+    );
+
+    if (rs === false) {
+      return res.status(500).send("Update fail");
+    }
+
+    req.body.service = rs._id;
+    await pitch.updateOne(req.body, { new: false });
+    return res.status(200).send("0");
+  } catch (error) {
+    console.log(error);
+    
+    return res.status(500).send("Update error");
+  }
+};
+
+/**
+ * function update service
+ *
+ * @param req
+ * @param res
+ * @returns
+ */
+export const postUpdatePitchService = async (req: Request, res: Response) => {
+  try {
+    let pitch = await Pitch.findById(req.body._id);
+    if (pitch === null) {
+      return res.status(500).send("Update error");
+    }
+
+    let rs = await ServiceFunc.updateService(pitch.service, req.body.service);
+
+    if (rs === false) {
+      return res.status(500).send("Update fail");
+    }
+
+    req.body.service = rs._id;
+    await pitch.updateOne(req.body, { new: false });
+    return res.status(200).send("0");
+  } catch (error) {
+    console.log(error);
+    
+    return res.status(500).send("Update error");
   }
 };
 
@@ -138,6 +204,7 @@ export const postDeletePitch = (req: Request, res: Response) => {
     });
     return res.status(200).send("0");
   } catch (error) {
-    return res.sendStatus(500).send("Delete error");
+    
+    return res.status(500).send("Delete error");
   }
 };

@@ -180,6 +180,14 @@ app.post(version + pitchEntity + "update", (req, res) => {
 app.post(version + pitchEntity + "delete", (req, res) => {
   pitchRouter.pitchDelete(req, res);
 });
+
+app.post(version + pitchEntity + "service", (req, res) => {
+  pitchRouter.pitchAddService(req, res);
+});
+
+app.post(version + pitchEntity + "service/update", (req, res) => {
+  pitchRouter.pitchUpdateService(req, res);
+});
 /*--------------------------- PITCH API ----------------------------*/
 
 /*------------------------- BLACKLIST API --------------------------*/

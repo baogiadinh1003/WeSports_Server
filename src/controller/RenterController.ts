@@ -21,8 +21,14 @@ export const postLogin = async (req: Request, res: Response) => {
     : renter.accountStatus === 2
     ? res.status(200).send(renter)
     : renter.accountStatus === 1
-    ? res.status(200).send("Account non verify email")
-    : res.status(200).send("Account has been banned");
+    ? res.status(200).send({
+        message: `Account ${renter.renterUsername} are not verify yet`,
+        _id: renter._id,
+      })
+    : res.status(200).send({
+        message: `Account ${renter.renterUsername} has been banned`,
+        _id: renter._id,
+      });
 };
 
 /**
@@ -38,6 +44,7 @@ export const postRegister = async (req: Request, res: Response) => {
   ) {
     return res.status(400).send("Validation fail");
   }
+  req.body.renterDateRegister = new Date().toLocaleDateString();
   let renter = new Renter(req.body);
   try {
     let result = await renter.save();

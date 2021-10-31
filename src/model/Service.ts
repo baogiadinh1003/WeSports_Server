@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
 import * as type from "../type/type";
 
-const renterSchema = new mongoose.Schema<type.service>({
-  serviceName: { type: String, unique: false, required: true },
-  servicePrice: { type: Number, required: true },
+const serviceSchema = new mongoose.Schema<type.services>({
+  serviceList: []
 });
 
-export const Renter = mongoose.model<type.service>("Renter", renterSchema);
+export const Service = mongoose.model<type.services>("Services", serviceSchema);

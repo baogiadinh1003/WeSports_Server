@@ -8,12 +8,6 @@ const ownerSchema = new mongoose.Schema<type.owner>({
   ownerPhone: { type: String, unique: true, required: true },
   ownerFbUrl: { type: String, unique: true, required: false, sparse: true },
   ownerEmail: { type: String, unique: true, required: true},
-  ownerAddress: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Addresses",
-    unique: false,
-    required: true,
-  },
   accountStatus: { type: Number, unique: false, default: 1, required: true },
   ownerDateRegister: { type: String },
 });

@@ -19,6 +19,11 @@ const pitchSchema = new mongoose.Schema<type.pitch>({
     unique: false,
     required: true,
   },
+  service: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Services",
+    default: null,
+  },
 });
 
 export const Pitch = mongoose.model<type.pitch>("Pitch", pitchSchema);

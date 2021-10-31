@@ -23,7 +23,6 @@ export type owner = {
   ownerPhone: string;
   ownerFbUrl: string;
   ownerEmail: string;
-  ownerAddress: { type: mongoose.Schema.Types.ObjectId; ref: "Addresses" };
   accountStatus: number;
   ownerDateRegister: string;
 };
@@ -43,6 +42,11 @@ export type pitch = {
   pitchStatus: number;
   pitchTimeRent: string;
   pitchOwner: { type: mongoose.Schema.Types.ObjectId; ref: "Owner" };
+  service: {
+    type: mongoose.Schema.Types.ObjectId;
+    ref: "Services";
+    default: null;
+  };
 };
 
 export type blackList = {
@@ -50,7 +54,22 @@ export type blackList = {
   violateTimes?: Number;
 };
 
+export type services = {
+  serviceList: { type: mongoose.Schema.Types.Array };
+};
+
 export type service = {
   serviceName: string;
-  servicePrice: { type: Number; required: true };
+  servicePrice: Number;
+  serviceAmount?: Number;
+};
+
+export type bill = {
+  reter: { type: mongoose.Schema.Types.ObjectId; ref: "Renter" };
+  pitch: { type: mongoose.Schema.Types.ObjectId; ref: "Pitch" };
+  timeStartRent: { type: mongoose.Schema.Types.Date };
+  service: { type: mongoose.Schema.Types.Array };
+  total: { type: mongoose.Schema.Types.Number; required: true };
+  status: { type: mongoose.Schema.Types.Number; required: true };
+  date: { type: String; required: true };
 };

@@ -24,3 +24,11 @@ export const pitchUpdate = (req: express.Request, res: express.Response) => {
 export const pitchDelete = (req: express.Request, res: express.Response) => {
   return pitchController.postDeletePitch(req, res);
 };
+
+export const pitchAddService = (req: express.Request, res: express.Response) => {
+  return pitchController.postAddPitchService(req, res);
+};
+
+export const pitchUpdateService = (req: express.Request, res: express.Response) => {
+  return pitchController.postUpdatePitchService(req, res);
+};
