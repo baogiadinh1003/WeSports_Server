@@ -19,7 +19,7 @@ export const postLogin = async (req: Request, res: Response) => {
   return renter === null || renter === undefined
     ? res.status(200).send({ message: "Sign in fail" })
     : renter.accountStatus === 2
-    ? res.status(200).send(renter)
+    ? res.status(200).send({ message: "Sign in success", data: renter })
     : renter.accountStatus === 1
     ? res.status(200).send({
         message: `Account ${renter.renterUsername} are not verify yet`,
@@ -67,9 +67,7 @@ export const getAllRenter = async (req: Request, res: Response) => {
       .status(200)
       .send({ message: "Get all renter success", data: renters });
   } catch (error) {
-    return res
-      .status(500)
-      .send({ message: "Get all renter error"});
+    return res.status(500).send({ message: "Get all renter error" });
   }
 };
 
@@ -86,18 +84,18 @@ export const postUpdateRenter = async (req: Request, res: Response) => {
     !validatePhone(req.body.renterPhone) ||
     !validateEmail(req.body.renterEmail)
   ) {
-    return res.status(400).send({message: "Validation fail"});
+    return res.status(400).send({ message: "Validation fail" });
   }
   try {
     let renter = await Renter.findByIdAndUpdate(req.body._id, req.body, {
       new: false,
     });
     if (renter === null || renter === undefined) {
-      return res.status(200).send({message: "Update error"});
+      return res.status(200).send({ message: "Update error" });
     }
-    return res.status(200).send({message: "Update success"});
+    return res.status(200).send({ message: "Update success" });
   } catch (error) {
-    return res.sendStatus(500).send({message: "Update error"});
+    return res.sendStatus(500).send({ message: "Update error" });
   }
 };
 
