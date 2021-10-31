@@ -37,9 +37,9 @@ export const postLogin = async (req: Request, res: Response) => {
  */
 export const postRegister = async (req: Request, res: Response) => {
   if (
-    !validateDate(req.body.renterDateRegister) ||
     !validateAccountStatus(req.body.accountStatus) ||
-    !validatePhone(req.body.renterPhone)
+    !validatePhone(req.body.renterPhone) ||
+    !validateEmail(req.body.renterEmail)
   ) {
     return res.status(400).send({ message: "Validation fail" });
   }
