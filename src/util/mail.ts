@@ -14,7 +14,7 @@ var smtpTransport = nodemailler.createTransport({
 });
 
 export const sendMail = (req: express.Request, res: express.Response) => {
-  let link = "https://we-sports-sv.herokuapp.com/" + "verify?id=" + req.body.id;
+  let link = "https://we-sports-sv.herokuapp.com/" + "verify?id=" + req.body._id;
   let html =
     "Hello,<br> Please Click on the link to verify your email.<br><a href=" +
     link +
@@ -22,7 +22,7 @@ export const sendMail = (req: express.Request, res: express.Response) => {
   let subject = "Please confirm your Email account";
   if (req.body.reset !== null && req.body.reset !== undefined) {
     link =
-      "https://we-sports-sv.herokuapp.com/" + "resetpass?id=" + req.body.id;
+      "https://we-sports-sv.herokuapp.com/" + "resetpass?id=" + req.body._id;
     html =
       "Hello,<br> Please Click on the link to reset password your account.<br><a href=" +
       link +

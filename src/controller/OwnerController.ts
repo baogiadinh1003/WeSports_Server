@@ -119,7 +119,7 @@ export const postDeleteOwner = (req: Request, res: Response) => {
 };
 
 export const getOneOwner = async (req: Request, res: Response) => {
-  let owner = await Owner.findById(req.body.id);
+  let owner = await Owner.findById(req.body._id);
   if (owner === null) {
     return res.status(200).send({ message: "Owner not found" });
   }

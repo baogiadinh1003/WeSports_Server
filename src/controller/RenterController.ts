@@ -120,7 +120,7 @@ export const postDeleteRenter = (req: Request, res: Response) => {
 };
 
 export const getOneRenter = async (req: Request, res: Response) => {
-  let renter = await Renter.findById(req.body.id);
+  let renter = await Renter.findById(req.body._id);
   if (renter === null) {
     return res.status(200).send({ message: "Renter not found" });
   }
