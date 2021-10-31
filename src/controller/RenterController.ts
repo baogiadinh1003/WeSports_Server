@@ -82,7 +82,6 @@ export const getAllRenter = async (req: Request, res: Response) => {
  */
 export const postUpdateRenter = async (req: Request, res: Response) => {
   if (
-    !validateDate(req.body.renterDateRegister) ||
     !validateAccountStatus(req.body.accountStatus) ||
     !validatePhone(req.body.renterPhone) ||
     !validateEmail(req.body.renterEmail)
