@@ -11,10 +11,12 @@ import * as mail from "./util/mail";
 import session = require("express-session");
 import passport = require("passport");
 import * as FacebookStrategy from "passport-facebook";
+var cors = require('cors');
 const app = express();
 
 // server listening
 app.set("trust proxy", 1); // trust first proxy
+app.use(cors());
 app.use(
   session({
     secret: "fb login",
