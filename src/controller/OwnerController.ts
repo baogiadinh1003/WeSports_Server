@@ -112,9 +112,9 @@ export const postDeleteOwner = (req: Request, res: Response) => {
         return res.status(200).send("1");
       }
     });
-    return res.status(200).send("0");
+    return res.status(200).send({message:"Delete success"});
   } catch (error) {
-    return res.sendStatus(500).send("Delete error");
+    return res.sendStatus(500).send({ message: "Delete error" });
   }
 };
 

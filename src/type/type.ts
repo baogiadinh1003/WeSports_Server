@@ -74,6 +74,7 @@ export type bill = {
   reter: { type: mongoose.Schema.Types.ObjectId; ref: "Renter" };
   pitch: { type: mongoose.Schema.Types.ObjectId; ref: "Pitch" };
   timeStartRent: { type: mongoose.Schema.Types.Date };
+  timeEndRent: { type: mongoose.Schema.Types.Date };
   service: { type: mongoose.Schema.Types.Array };
   total: { type: mongoose.Schema.Types.Number; required: true };
   status: { type: mongoose.Schema.Types.Number; required: true };

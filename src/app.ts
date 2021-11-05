@@ -103,7 +103,7 @@ app.post(
 
 /*------------------------- FACEBOOK API ---------------------------*/
 app.get("/", (req: express.Request, res: express.Response) => {
-  return res.status(200).send("LOGIN FB OK");
+  return res.status(200).send("OK");
 });
 
 app.get("/auth/facebook", passport.authenticate("facebook"));
@@ -223,7 +223,7 @@ app.get("/verify?", (req, res) => {
   mail.verifyEmail(req, res);
 });
 
-app.get("/resetpass?", (req,res) => {
+app.get("/resetpass?", (req, res) => {
   mail.resetPass(req, res);
 });
 /*------------------------ SEND MAIL VERIFY ------------------------*/
