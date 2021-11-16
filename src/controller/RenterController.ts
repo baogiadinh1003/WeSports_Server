@@ -17,17 +17,21 @@ export const postLogin = async (req: Request, res: Response) => {
     renterPassword: req.body.renterPassword,
   });
   return renter === null || renter === undefined
-    ? res.status(200).send({ message: "Sign in fail" })
+    ? res.status(200).send({ message: "Sign in fail", status: 1 })
     : renter.accountStatus === 2
-    ? res.status(200).send({ message: "Sign in success", data: renter })
+    ? res
+        .status(200)
+        .send({ message: "Sign in success", data: renter, status: 0 })
     : renter.accountStatus === 1
     ? res.status(200).send({
         message: `Account ${renter.renterUsername} are not verify yet`,
         _id: renter._id,
+        status: 2,
       })
     : res.status(200).send({
         message: `Account ${renter.renterUsername} has been banned`,
         _id: renter._id,
+        status: 3,
       });
 };
 

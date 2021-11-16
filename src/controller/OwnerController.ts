@@ -17,17 +17,21 @@ export const postLogin = async (req: Request, res: Response) => {
     ownerPassword: req.body.ownerPassword,
   });
   return owner === null || undefined
-    ? res.status(200).send({ message: "Sign in fail" })
+    ? res.status(200).send({ message: "Sign in fail", status: 1 })
     : owner.accountStatus === 2
-    ? res.status(200).send({ message: "Sign in success", data: owner })
+    ? res
+        .status(200)
+        .send({ message: "Sign in success", data: owner, status: 0 })
     : owner.accountStatus === 1
     ? res.status(200).send({
         message: `Account ${owner.ownerUsername} are not verify email yet`,
         _id: owner._id,
+        status: 2,
       })
     : res.status(200).send({
         message: `Account ${owner.ownerUsername} has been banned`,
         _id: owner._id,
+        status: 3,
       });
 };
 
@@ -112,7 +116,7 @@ export const postDeleteOwner = (req: Request, res: Response) => {
         return res.status(200).send("1");
       }
     });
-    return res.status(200).send({message:"Delete success"});
+    return res.status(200).send({ message: "Delete success" });
   } catch (error) {
     return res.sendStatus(500).send({ message: "Delete error" });
   }
