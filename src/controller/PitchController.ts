@@ -18,6 +18,10 @@ export const postAdd = async (req: Request, res: Response) => {
     return res.status(500).send("Add address error");
   }
   req.body.pitchAddress = rs._id;
+  let pricePitch = req.body.pitchPrice;
+  if (pricePitch === undefined || pricePitch === null) {
+    return res.status(500).send({ message: "Add pitch error" });
+  }
   let pitch = new Pitch(req.body);
   try {
     let result = await pitch.save();

@@ -36,11 +36,14 @@ export type address = {
 
 export type pitch = {
   pitchName: string;
-  pitchPrice: number;
+  pitchPrice: Object;
   pitchMaxSize: number;
   pitchAddress: { type: mongoose.Schema.Types.ObjectId; ref: "Addresses" };
   pitchStatus: number;
-  pitchTimeRent: string;
+  pitchTimeOpen: { type: number; unique: false; required: true };
+  pitchTimeClose: { type: number; unique: false; required: true };
+  timePerBattle: number;
+  pitchImage: { type: mongoose.Schema.Types.Array };
   pitchOwner: { type: mongoose.Schema.Types.ObjectId; ref: "Owner" };
   service: {
     type: mongoose.Schema.Types.ObjectId;
@@ -48,6 +51,19 @@ export type pitch = {
     default: null;
   };
 };
+
+export type price = {
+  normalPrice: {
+    timeStart: number,
+    timeEnd: number,
+    cost: number
+  },
+  peakPrice: {
+    timeStart: number,
+    timeEnd: number,
+    cost: number
+  }
+}
 
 export type report = {
   accountReported: { type: mongoose.Schema.Types.ObjectId };
