@@ -45,15 +45,17 @@ export const postRegister = async (req: Request, res: Response) => {
     !validatePhone(req.body.ownerPhone) ||
     !validateEmail(req.body.ownerEmail)
   ) {
-    return res.status(400).send({ message: "Validation fail" });
+    return res.status(400).send({ message: "Validation fail", status: 2 });
   }
   req.body.ownerDateRegister = new Date().toLocaleDateString();
   let owner = new Owner(req.body);
   try {
     let result = await owner.save();
-    return res.status(200).send({ message: "Sign up success", data: result });
+    return res
+      .status(200)
+      .send({ message: "Sign up success", data: result, status: 0 });
   } catch (error) {
-    return res.status(500).send({ message: "Sign up fail" });
+    return res.status(500).send({ message: "Sign up fail", status: 1 });
   }
 };
 
