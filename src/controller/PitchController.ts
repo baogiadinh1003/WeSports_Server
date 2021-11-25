@@ -10,9 +10,6 @@ import { pitch } from "../type/type";
  * @route POST /add
  */
 export const postAdd = async (req: Request, res: Response) => {
-  if (!validatePitchStatus(req.body.pitchStatus)) {
-    return res.status(400).send("Validation fail");
-  }
   let rs = await AddressFunc.addAddress(req.body.pitchAddress);
   if (rs === false) {
     return res.status(500).send("Add address error");
