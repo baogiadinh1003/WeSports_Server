@@ -28,28 +28,30 @@ export type owner = {
 };
 
 export type address = {
-  addressCity: string;
-  addressDistrict: string;
-  addressCommune: string;
-  addressDetail: string;
+  addressCity: { type: Object; required: true };
+  addressDistrict: { type: Object; required: true };
+  addressStreet: string;
 };
 
 export type pitch = {
   pitchName: string;
-  pitchPrice: Object;
-  pitchMaxSize: number;
+  pitchType: { type: Object; required: true };
+  pitchSize: number;
   pitchAddress: { type: mongoose.Schema.Types.ObjectId; ref: "Addresses" };
-  pitchStatus: number;
-  pitchTimeOpen: { type: number; unique: false; required: true };
-  pitchTimeClose: { type: number; unique: false; required: true };
-  timePerBattle: number;
-  pitchImage: { type: mongoose.Schema.Types.Array };
-  pitchOwner: { type: mongoose.Schema.Types.ObjectId; ref: "Owner" };
+  pitchOpen: { type: String; unique: false; required: true };
+  pitchClose: { type: String; unique: false; required: true };
+  timePerRent: number;
+  minPrice: number;
+  maxPrice: number;
+  pitchPrice: { type: mongoose.Schema.Types.Array };
   service: {
     type: mongoose.Schema.Types.ObjectId;
     ref: "Services";
     default: null;
   };
+  pitchImage: { type: mongoose.Schema.Types.Array };
+  pitchOwner: { type: mongoose.Schema.Types.ObjectId; ref: "Owner" };
+  pitchStatus: number;
 };
 
 export type price = {

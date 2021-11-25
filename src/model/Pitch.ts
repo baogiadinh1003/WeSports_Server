@@ -3,37 +3,41 @@ import * as type from "../type/type";
 
 const pitchSchema = new mongoose.Schema<type.pitch>({
   pitchName: { type: String, unique: false, required: true },
-  pitchPrice: { type: Object, unique: false, required: true },
-  pitchMaxSize: { type: Number, unique: false, required: true },
+  pitchType: { type: Object, required: true },
+  pitchSize: { type: Number, unique: false, required: true },
   pitchAddress: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Addresses",
     unique: false,
     required: true,
   },
-  pitchStatus: { type: Number, unique: false, default: 1, required: true },
-  pitchTimeOpen: {
-    type: mongoose.Schema.Types.Number,
+  pitchOpen: {
+    type: mongoose.Schema.Types.String,
     unique: false,
     required: true,
   },
-  pitchTimeClose: {
-    type: mongoose.Schema.Types.Number,
+  pitchClose: {
+    type: mongoose.Schema.Types.String,
     unique: false,
     required: true,
   },
-  pitchOwner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Owner",
-    unique: false,
-    required: true,
-  },
+  timePerRent: { type: Number, unique: false, required: true },
+  minPrice: { type: Number, unique: false, required: true },
+  maxPrice: { type: Number, unique: false, required: true },
+  pitchPrice: { type: Array, unique: false, required: true },
   service: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Services",
     default: null,
   },
   pitchImage: { type: mongoose.Schema.Types.Array },
+  pitchOwner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Owner",
+    unique: false,
+    required: true,
+  },
+  pitchStatus: { type: Number, unique: false, default: 1, required: true },
 });
 
 export const Pitch = mongoose.model<type.pitch>("Pitch", pitchSchema);
