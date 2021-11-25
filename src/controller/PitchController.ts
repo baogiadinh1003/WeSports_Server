@@ -116,9 +116,6 @@ export const getAllPitchByOwner = async (req: Request, res: Response) => {
  * @returns
  */
 export const postUpdatePitch = async (req: Request, res: Response) => {
-  if (!validatePitchStatus(req.body.pitchStatus)) {
-    return res.status(400).send({ message: "Validation fail" });
-  }
   try {
     let pitch = await Pitch.findById(req.body._id);
     if (pitch === null) {
@@ -130,7 +127,6 @@ export const postUpdatePitch = async (req: Request, res: Response) => {
       req.body.pitchAddress
     );
 
-    console.log(rs);
     if (rs === false) {
       return res.status(500).send({ message: "Update error" });
     }
