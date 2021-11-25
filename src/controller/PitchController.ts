@@ -24,6 +24,8 @@ export const postAdd = async (req: Request, res: Response) => {
     let result = await pitch.save();
     return res.status(200).send({ message: "Add pitch success", data: result });
   } catch (error: any) {
+    console.log(error);
+    
     if (error.errors.pitchOwner !== null || error.errors.pitchOwner !== undefined) {
       return res.status(400).send({ message: "Pitch owner not exist" });
     }

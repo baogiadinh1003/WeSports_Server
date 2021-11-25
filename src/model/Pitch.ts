@@ -26,8 +26,7 @@ const pitchSchema = new mongoose.Schema<type.pitch>({
   maxPrice: { type: Number, unique: false, required: true },
   pitchPrice: { type: Array, unique: false, required: true },
   service: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Services",
+    type: mongoose.Schema.Types.Array,
     default: null,
   },
   pitchImage: { type: mongoose.Schema.Types.Array },

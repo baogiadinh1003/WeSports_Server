@@ -45,8 +45,7 @@ export type pitch = {
   maxPrice: number;
   pitchPrice: { type: mongoose.Schema.Types.Array };
   service: {
-    type: mongoose.Schema.Types.ObjectId;
-    ref: "Services";
+    type: mongoose.Schema.Types.Array;
     default: null;
   };
   pitchImage: { type: mongoose.Schema.Types.Array };
