@@ -31,6 +31,7 @@ export type address = {
   addressCity: { type: Object; required: true };
   addressDistrict: { type: Object; required: true };
   addressStreet: string;
+  addressLocation: { type: Object };
 };
 
 export type pitch = {
