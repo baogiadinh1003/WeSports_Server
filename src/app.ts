@@ -11,7 +11,7 @@ import * as mail from "./util/mail";
 import session = require("express-session");
 import passport = require("passport");
 import * as FacebookStrategy from "passport-facebook";
-var cors = require('cors');
+var cors = require("cors");
 const app = express();
 
 // server listening
@@ -136,7 +136,7 @@ app.get(version + ownerEntity + "list", (req, res) => {
   ownerRouter.ownerList(req, res);
 });
 
-app.get(version + ownerEntity + "detail", (req, res) => {
+app.post(version + ownerEntity + "detail", (req, res) => {
   ownerRouter.ownerGetOne(req, res);
 });
 
