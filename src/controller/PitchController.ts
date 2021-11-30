@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { Pitch } from "../model/Pitch";
 import * as AddressFunc from "../controller/AddressController";
 import * as ServiceFunc from "../controller/ServiceController";
-import { validatePitchStatus } from "../util/validation";
 import { pitch } from "../type/type";
 
 /**
@@ -55,9 +54,9 @@ export const getAllPitch = async (req: Request, res: Response) => {
         return res.status(200).send("No matching item");
       }
       for (let i = 0; i < pitchs.length; i++) {
-        let dummyPitch = pitchs[i];
+        let dummyPitch: any = pitchs[i];
         for (let j = 0; j < addresses.length; j++) {
-          if (dummyPitch.pitchAddress == addresses[i]._id) {
+          if (String(dummyPitch.pitchAddress._id) === String(addresses[j]._id)) {
             pitchFilter.push(dummyPitch);
             break;
           }
@@ -65,7 +64,7 @@ export const getAllPitch = async (req: Request, res: Response) => {
       }
       return res
         .status(200)
-        .send({ message: "Get all pitch success", data: pitchs });
+        .send({ message: "Get all pitch success", data: pitchFilter });
     }
   } catch (error) {
     return res.status(500).send({ message: "Get all pitch error" });
