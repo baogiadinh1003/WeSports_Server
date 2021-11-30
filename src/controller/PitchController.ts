@@ -21,7 +21,7 @@ export const postAdd = async (req: Request, res: Response) => {
   }
   let pitch = new Pitch(req.body);
   try {
-    let result = await pitch.save();
+    let result = await (await pitch.save()).populate({path: "pitchAddress"});
     return res.status(200).send({ message: "Add pitch success", data: result });
   } catch (error: any) {
     console.log(error);
