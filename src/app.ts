@@ -165,7 +165,7 @@ app.post(version + pitchEntity + "add", (req, res) => {
   pitchRouter.pitchAdd(req, res);
 });
 
-app.get(version + pitchEntity + "list", (req, res) => {
+app.post(version + pitchEntity + "list", (req, res) => {
   pitchRouter.pitchList(req, res);
 });
 
