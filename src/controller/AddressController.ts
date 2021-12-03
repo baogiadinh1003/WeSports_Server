@@ -60,6 +60,5 @@ export const getAddressWithFilter = async (filter: addressType) => {
   }
 
   let addresses = await Address.find(filterUse);
-  console.log(filterUse);
   return addresses;
 };
