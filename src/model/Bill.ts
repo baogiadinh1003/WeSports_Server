@@ -2,11 +2,9 @@ import mongoose from "mongoose";
 import * as type from "../type/type";
 
 const billSchema = new mongoose.Schema<type.bill>({
-  renter: { type: mongoose.Schema.Types.ObjectId, ref: "Renter" },
   pitch: { type: mongoose.Schema.Types.ObjectId, ref: "Pitch" },
-  service: { type: mongoose.Schema.Types.Array },
-  timeStartRent: { type: mongoose.Schema.Types.Date },
-  timeEndRent: { type: mongoose.Schema.Types.Date },
+  renter: { type: mongoose.Schema.Types.ObjectId, ref: "Renter" },
+  timeRent: { type: mongoose.Schema.Types.Array },
   total: { type: mongoose.Schema.Types.Number, required: true },
   status: { type: Number, default: 1, required: true },
   date: { type: String, required: true },

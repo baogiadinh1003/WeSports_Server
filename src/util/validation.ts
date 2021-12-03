@@ -43,44 +43,6 @@ const validateDate = (inp: String) => {
 };
 
 /**
- * Function check validate for account status
- *
- * @param inp
- * @returns boolean
- */
-const validateAccountStatus = (inp: String | Number) => {
-  if (isEmpty(inp)) {
-    return false;
-  }
-  inp = Number(inp);
-
-  if (inp !== 1 && inp !== 2 && inp !== 3) {
-    return false;
-  } else {
-    return true;
-  }
-};
-
-/**
- * Function check validate for pitch status
- *
- * @param inp
- * @returns boolean
- */
-const validatePitchStatus = (inp: String | Number) => {
-  if (isEmpty(inp)) {
-    return false;
-  }
-  inp = Number(inp);
-
-  if (inp !== 1 && inp !== 2 && inp !== 3) {
-    return false;
-  } else {
-    return true;
-  }
-};
-
-/**
  * function check validate phone
  *
  * @param inp
@@ -119,16 +81,15 @@ const validateEmail = (inp: String) => {
  * @param inp
  * @returns
  */
-const isEmpty = (inp: any) => {
+export const isEmpty = (inp: any) => {
   if (inp === null || inp === undefined) {
     return true;
   }
   return false;
 };
+
 export {
   validateDate,
-  validateAccountStatus,
-  validatePitchStatus,
   validatePhone,
   validateEmail,
 };

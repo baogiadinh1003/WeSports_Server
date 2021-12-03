@@ -19,11 +19,11 @@ export const getAccountInBlackList = async (
     let blacklist = await BlackList.find({});
     return res
       .status(200)
-      .send({ message: "Get black list success", data: blacklist });
+      .send({ message: `Get black list success`, data: blacklist, status: 1 });
   } catch (error) {
     return res
       .status(500)
-      .send({ message: "Get black list error"});
+      .send({ message: `Server error`, status: 3});
   }
   
 };

@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import { Renter } from "../model/Renter";
 import {
-  validateDate,
-  validateAccountStatus,
   validatePhone,
   validateEmail,
+  isEmpty
 } from "../util/validation";
 
 /**
@@ -16,23 +15,23 @@ export const postLogin = async (req: Request, res: Response) => {
     renterUsername: req.body.renterUsername,
     renterPassword: req.body.renterPassword,
   });
-  return renter === null || renter === undefined
-    ? res.status(200).send({ message: "Sign in fail", status: 1 })
+  return renter === null
+    ? res.status(400).send({ message: "Sign in fail", status: 1 })
     : renter.accountStatus === 2
-    ? res
+      ? res
         .status(200)
         .send({ message: "Sign in success", data: renter, status: 0 })
-    : renter.accountStatus === 1
-    ? res.status(200).send({
-        message: `Account ${renter.renterUsername} are not verify yet`,
-        _id: renter._id,
-        status: 2,
-      })
-    : res.status(200).send({
-        message: `Account ${renter.renterUsername} has been banned`,
-        _id: renter._id,
-        status: 3,
-      });
+      : renter.accountStatus === 1
+        ? res.status(200).send({
+          message: `Account ${renter.renterUsername} are not verify yet`,
+          _id: renter._id,
+          status: 2,
+        })
+        : res.status(200).send({
+          message: `Account ${renter.renterUsername} has been banned`,
+          _id: renter._id,
+          status: 3,
+        });
 };
 
 /**
@@ -41,11 +40,10 @@ export const postLogin = async (req: Request, res: Response) => {
  */
 export const postRegister = async (req: Request, res: Response) => {
   if (
-    !validateAccountStatus(req.body.accountStatus) ||
     !validatePhone(req.body.renterPhone) ||
     !validateEmail(req.body.renterEmail)
   ) {
-    return res.status(400).send({ message: "Validation fail", status: 2 });
+    return res.status(400).send({ message: `Validation fail`, status: 2 });
   }
   req.body.renterDateRegister = new Date().toLocaleDateString();
   let renter = new Renter(req.body);
@@ -53,9 +51,9 @@ export const postRegister = async (req: Request, res: Response) => {
     let result = await renter.save();
     return res
       .status(200)
-      .send({ message: "Sign up success", data: result, status: 0 });
+      .send({ message: `Sign up success`, data: result, status: 0 });
   } catch (error) {
-    return res.status(500).send({ message: "Sign up fail", status: 1 });
+    return res.status(500).send({ message: `Sign up fail"`, status: 1 });
   }
 };
 
@@ -71,9 +69,9 @@ export const getAllRenter = async (req: Request, res: Response) => {
     let renters = await Renter.find({});
     return res
       .status(200)
-      .send({ message: "Get all renter success", data: renters });
+      .send({ message: `Get all renter success`, data: renters, status: 1 });
   } catch (error) {
-    return res.status(500).send({ message: "Get all renter error" });
+    return res.status(500).send({ message: `Server error`, status: 3 });
   }
 };
 
@@ -86,22 +84,21 @@ export const getAllRenter = async (req: Request, res: Response) => {
  */
 export const postUpdateRenter = async (req: Request, res: Response) => {
   if (
-    !validateAccountStatus(req.body.accountStatus) ||
     !validatePhone(req.body.renterPhone) ||
     !validateEmail(req.body.renterEmail)
   ) {
-    return res.status(400).send({ message: "Validation fail" });
+    return res.status(400).send({ message: `Validation fail`, status: 4 });
   }
   try {
     let renter = await Renter.findByIdAndUpdate(req.body._id, req.body, {
       new: false,
     });
-    if (renter === null || renter === undefined) {
-      return res.status(200).send({ message: "Update error" });
+    if (isEmpty(renter) === true) {
+      return res.status(400).send({ message: `Update error`, status: 2 });
     }
-    return res.status(200).send({ message: "Update success" });
+    return res.status(200).send({ message: `Update success`, status: 1 });
   } catch (error) {
-    return res.sendStatus(500).send({ message: "Update error" });
+    return res.sendStatus(500).send({ message: `Server error`, status: 3 });
   }
 };
 
@@ -116,19 +113,23 @@ export const postDeleteRenter = (req: Request, res: Response) => {
   try {
     Renter.findByIdAndDelete(req.body._id, (err: Error, res: any) => {
       if (err) {
-        return res.status(200).send({ message: "Delete error" });
+        return res.status(400).send({ message: `Delete error`, status: 2 });
       }
     });
-    return res.status(200).send({ message: "Delete success" });
+    return res.status(200).send({ message: `Delete success`, status: 1 });
   } catch (error) {
-    return res.sendStatus(500).send({ message: "Delete error" });
+    return res.sendStatus(500).send({ message: `Delete error`, status: 3 });
   }
 };
 
 export const getOneRenter = async (req: Request, res: Response) => {
-  let renter = await Renter.findById(req.body._id);
-  if (renter === null) {
-    return res.status(200).send({ message: "Renter not found" });
+  try {
+    let renter = await Renter.findById(req.body._id);
+    if (renter === null) {
+      return res.status(400).send({ message: `Renter not found`, status: 2 });
+    }
+    return res.status(200).send({ message: `Get renter success`, status: 1, data: renter });
+  } catch (error) {
+    return res.status(500).send({ message: `Server error`, status: 3 });
   }
-  return res.status(200).send({ message: "Get renter success", data: renter });
 };

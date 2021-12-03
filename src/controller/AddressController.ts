@@ -11,7 +11,6 @@ type addressType = {
 
 export const addAddress = async (data: address) => {
   let adr = new Address(data);
-
   try {
     let rs = await adr.save();
     return rs;
@@ -54,7 +53,7 @@ export const getAddressWithFilter = async (filter: addressType) => {
   }
 
   if (filter.addressLocation !== undefined && filter.addressLocation !== null) {
-    filterUse.addressLocation = { longitude: null, latitude: null};
+    filterUse.addressLocation = { longitude: null, latitude: null };
     filterUse.addressLocation.longitude = filter.addressLocation.longitude;
     filterUse.addressLocation.latitude = filter.addressLocation.latitude;
   }
