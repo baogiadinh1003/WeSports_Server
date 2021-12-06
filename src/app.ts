@@ -7,6 +7,7 @@ import * as ownerRouter from "./routers/ownerRouters";
 import * as pitchRouter from "./routers/pitchRouters";
 import * as blackListRouter from "./routers/blackListRouters";
 import * as reportRouter from "./routers/reportRouters";
+import * as billRounter from "./routers/billRouters";
 import * as mail from "./util/mail";
 import session = require("express-session");
 import passport = require("passport");
@@ -56,7 +57,7 @@ connectDatabase();
 
 const version = "/v1/";
 //Empty router
-app.post("/", (req: express.Request, res: express.Response) => {});
+app.post("/", (req: express.Request, res: express.Response) => { });
 
 /*--------------------------- RENTER API ---------------------------*/
 const renterEntity = "renter/";
@@ -221,6 +222,29 @@ app.get("/resetpass?", (req, res) => {
   mail.resetPass(req, res);
 });
 /*------------------------ SEND MAIL VERIFY ------------------------*/
+
+/*------------------------------ BILL ------------------------------*/
+const billEntity = "bill/";
+app.post(version + billEntity + "add", (req, res) => {
+  billRounter.addBill(req, res);
+});
+
+app.post(version + billEntity + "listbyrenter", (req, res) => {
+  billRounter.getAllByRenter(req, res);
+});
+
+app.post(version + billEntity + "listbypitch", (req, res) => {
+  billRounter.getAllByPitch(req, res);
+});
+
+app.post(version + billEntity + "update", (req, res) => {
+  billRounter.updateById(req, res);
+});
+
+app.post(version + billEntity + "delete", (req, res) => {
+  billRounter.deleteById(req, res);
+});
+/*------------------------------ BILL ------------------------------*/
 
 /*---------------------------- RUN HOST ----------------------------*/
 app.listen(process.env.PORT || 3000, () => {

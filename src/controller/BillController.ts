@@ -52,7 +52,7 @@ export const getBillsFromRenter = async (req: Request, res: Response) => {
         if (renter === null || renter === undefined) {
             return res.status(400).send({ message: `Pitch not found`, status: 2 })
         }
-        let bills = await Bill.find({ pitch: req.body._id });
+        let bills = await Bill.find({ renter: req.body._id });
         return res.status(200).send({ message: `Get all bill from renter id: ${req.body._id}`, status: 1, data: bills })
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 })
@@ -65,7 +65,7 @@ export const getBillsFromRenter = async (req: Request, res: Response) => {
  */
 export const updateBill = async (req: Request, res: Response) => {
     try {
-        let bill = await Bill.findByIdAndUpdate({ pitch: req.body._id });
+        let bill = await Bill.findByIdAndUpdate(req.body._id,req.body );
         return res.status(200).send({ message: `Update bill success`, status: 1, data: bill });
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 });
@@ -78,9 +78,9 @@ export const updateBill = async (req: Request, res: Response) => {
  */
 export const deleteBill = (req: Request, res: Response) => {
     try {
-        Bill.findByIdAndDelete({ pitch: req.body._id }, (err: Error, res: any) => {
+        Bill.findByIdAndDelete(req.body._id, (err: Error, res: any) => {
             if (err) {
-                return res.status(400).send("2");
+                return res.status(400).send({ message: `Delete error`, status: 2 });
             }
         });
         return res.status(200).send({ message: `Delete bill success`, status: 1 });
