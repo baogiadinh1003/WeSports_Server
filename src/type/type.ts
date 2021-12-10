@@ -91,7 +91,7 @@ export type service = {
 export type bill = {
   pitch: { type: mongoose.Schema.Types.ObjectId; ref: "Pitch" };
   renter: { type: mongoose.Schema.Types.ObjectId; ref: "Renter" };
-  timeRent: { type: mongoose.Schema.Types.Array };
+  timeRent: Array<any>;
   total: { type: mongoose.Schema.Types.Number; required: true };
   status: { type: mongoose.Schema.Types.Number; default: 1 };
   date: { type: String; required: true };

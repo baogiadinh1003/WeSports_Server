@@ -8,6 +8,22 @@ import { Renter } from "../model/Renter";
  * @route POST /bill/add
  */
 export const addBill = async (req: Request, res: Response) => {
+    let data = await Bill.find({ pitch: req.body.pitch });
+    let timeUse = [];
+    if (data.length !== 0) {
+        for (let i = 0; i < data.length; i++) {
+            let dumData = data[i];
+            for (let j = 0; j < dumData.timeRent.length; j++) {
+                timeUse.push(dumData.timeRent[j]);
+            }
+        }
+    }
+    for (let i = 0; i < req.body.timeRent.length; i++) {
+        let dumData = req.body.timeRent[i];
+        if (timeUse.indexOf(dumData) !== -1) {
+            return res.status(400).send({ message: `This time is used, please chose another time`, status: 4 })
+        }
+    }
     try {
         let renter = await Renter.findById(req.body.renter);
         if (renter === null || renter === undefined) {
@@ -65,7 +81,7 @@ export const getBillsFromRenter = async (req: Request, res: Response) => {
  */
 export const updateBill = async (req: Request, res: Response) => {
     try {
-        let bill = await Bill.findByIdAndUpdate(req.body._id,req.body );
+        let bill = await Bill.findByIdAndUpdate(req.body._id, req.body);
         return res.status(200).send({ message: `Update bill success`, status: 1, data: bill });
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 });
