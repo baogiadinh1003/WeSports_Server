@@ -82,7 +82,7 @@ app.get(
   }
 );
 
-app.get(
+app.post(
   version + renterEntity + "detail",
   (req: express.Request, res: express.Response) => {
     renterRouter.renterGetOne(req, res);
