@@ -8,7 +8,7 @@ import { Renter } from "../model/Renter";
  * @route POST /bill/add
  */
 export const addBill = async (req: Request, res: Response) => {
-    let data = await Bill.find({ pitch: req.body.pitch });
+    let data = await Bill.find({ pitch: req.body.pitch, date: req.body.date });
     let timeUse = [];
     if (data.length !== 0) {
         for (let i = 0; i < data.length; i++) {
