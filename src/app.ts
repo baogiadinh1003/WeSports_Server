@@ -244,6 +244,10 @@ app.post(version + billEntity + "update", (req, res) => {
 app.post(version + billEntity + "delete", (req, res) => {
   billRounter.deleteById(req, res);
 });
+
+app.get(version + billEntity + "list", (req, res) => {
+  billRounter.getAll(req, res);
+});
 /*------------------------------ BILL ------------------------------*/
 
 /*---------------------------- RUN HOST ----------------------------*/

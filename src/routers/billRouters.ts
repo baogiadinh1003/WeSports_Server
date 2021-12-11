@@ -20,3 +20,7 @@ export const updateById = (req: express.Request, res: express.Response) => {
 export const deleteById = (req: express.Request, res: express.Response) => {
     return BillController.deleteBill(req, res);
 };
+
+export const getAll = (req: express.Request, res: express.Response) => {
+    return BillController.getBills(req, res);
+};
