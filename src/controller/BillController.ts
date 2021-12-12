@@ -5,7 +5,6 @@ import { Renter } from "../model/Renter";
 
 /**
  * Add new bill
- * @route POST /bill/add
  */
 export const addBill = async (req: Request, res: Response) => {
     let data = await Bill.find({ pitch: req.body.pitch, date: req.body.date });
@@ -43,7 +42,6 @@ export const addBill = async (req: Request, res: Response) => {
 
 /**
  * Get all bill
- * @route POST /bill/add
  */
 export const getBills = async (req: Request, res: Response) => {
     try {
@@ -56,7 +54,6 @@ export const getBills = async (req: Request, res: Response) => {
 
 /**
  * Find all bill from 1 pitch
- * @route POST /bill/listfrompitch
  */
 export const getBillsFromPitch = async (req: Request, res: Response) => {
     try {
@@ -73,7 +70,6 @@ export const getBillsFromPitch = async (req: Request, res: Response) => {
 
 /**
  * Find all bill from 1 renter
- * @route POST /bill/listfromrenter
  */
 export const getBillsFromRenter = async (req: Request, res: Response) => {
     try {
@@ -90,7 +86,6 @@ export const getBillsFromRenter = async (req: Request, res: Response) => {
 
 /**
  * Update bill
- * @route POST /bill/update
  */
 export const updateBill = async (req: Request, res: Response) => {
     try {
