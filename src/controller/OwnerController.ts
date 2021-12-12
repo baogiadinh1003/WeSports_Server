@@ -76,10 +76,6 @@ export const getAllOwner = async (req: Request, res: Response) => {
 
 /**
  * function update owner
- *
- * @param req
- * @param res
- * @returns
  */
 export const postUpdateOwner = async (req: Request, res: Response) => {
   if (

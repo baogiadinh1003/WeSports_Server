@@ -8,7 +8,6 @@ import {
 
 /**
  * Login in using username and password.
- * @route POST /login
  */
 export const postLogin = async (req: Request, res: Response) => {
   let renter = await Renter.findOne({
@@ -36,7 +35,6 @@ export const postLogin = async (req: Request, res: Response) => {
 
 /**
  * Register account
- * @route POST /login
  */
 export const postRegister = async (req: Request, res: Response) => {
   if (
@@ -59,10 +57,6 @@ export const postRegister = async (req: Request, res: Response) => {
 
 /**
  * Get all renter
- *
- * @param req
- * @param res
- * @returns
  */
 export const getAllRenter = async (req: Request, res: Response) => {
   try {
@@ -77,10 +71,6 @@ export const getAllRenter = async (req: Request, res: Response) => {
 
 /**
  * function update renter
- *
- * @param req
- * @param res
- * @returns
  */
 export const postUpdateRenter = async (req: Request, res: Response) => {
   if (
@@ -104,10 +94,6 @@ export const postUpdateRenter = async (req: Request, res: Response) => {
 
 /**
  * function delete renter
- *
- * @param req
- * @param res
- * @returns
  */
 export const postDeleteRenter = (req: Request, res: Response) => {
   try {
@@ -122,6 +108,9 @@ export const postDeleteRenter = (req: Request, res: Response) => {
   }
 };
 
+/**
+ * function one renter
+ */
 export const getOneRenter = async (req: Request, res: Response) => {
   try {
     let renter = await Renter.findById(req.body._id);

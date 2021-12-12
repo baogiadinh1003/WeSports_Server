@@ -6,7 +6,6 @@ import { isEmpty } from "../util/validation"
 
 /**
  * Add Pitch
- * @route POST /add
  */
 export const postAdd = async (req: Request, res: Response) => {
   let rs = await AddressFunc.addAddress(req.body.pitchAddress);
@@ -30,10 +29,6 @@ export const postAdd = async (req: Request, res: Response) => {
 
 /**
  * Get all pitch
- *
- * @param req
- * @param res
- * @returns
  */
 export const getAllPitch = async (req: Request, res: Response) => {
   try {
@@ -68,7 +63,6 @@ export const getAllPitch = async (req: Request, res: Response) => {
 
 /**
  * Get by id
- * @route POST /pitchitem
  */
 export const getById = async (req: Request, res: Response) => {
   let pitch = await Pitch.findById(req.body._id)
@@ -81,10 +75,6 @@ export const getById = async (req: Request, res: Response) => {
 
 /**
  * Get all pitch by owner
- *
- * @param req
- * @param res
- * @returns
  */
 export const getAllPitchByOwner = async (req: Request, res: Response) => {
   try {
@@ -101,10 +91,6 @@ export const getAllPitchByOwner = async (req: Request, res: Response) => {
 
 /**
  * function update pitch
- *
- * @param req
- * @param res
- * @returns
  */
 export const postUpdatePitch = async (req: Request, res: Response) => {
   try {
@@ -132,10 +118,6 @@ export const postUpdatePitch = async (req: Request, res: Response) => {
 
 /**
  * function delete pitch
- *
- * @param req
- * @param res
- * @returns
  */
 export const postDeletePitch = (req: Request, res: Response) => {
   try {

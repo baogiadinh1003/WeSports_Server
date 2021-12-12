@@ -54,8 +54,6 @@ export const getBills = async (req: Request, res: Response) => {
     }
 }
 
-
-
 /**
  * Find all bill from 1 pitch
  * @route POST /bill/listfrompitch
