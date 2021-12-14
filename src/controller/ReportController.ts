@@ -33,38 +33,12 @@ export const addReport = async (req: Request, res: Response) => {
   }
 };
 
-export const updateReport = async (req: Request, res: Response) => {
-  try {
-    let rs = await Report.findById(req.body._id);
-    if (rs !== null) {
-      if (rs.violateTimes < 2) {
-        rs.violateTimes = Number(rs.violateTimes) + 1;
-      } else {
-        let result = await blackListFunc.addToBlackList(rs._id);
-        if (result === false) {
-          return res.status(400).send({ message: `Add to blacklist failed!`, status: 2 });
-        }
-        await Report.findByIdAndDelete(req.body._id);
-        return res.status(200).send({ message: `Add to blacklist success!`, status: 1 });
-      }
-    } else if (rs === null) {
-      return res.status(400).send({ message: `Account not found`, status: 2 });
-    }
-    return res
-      .status(200)
-      .send({ message: `Update report success!`, data: rs, status: 1 });
-  } catch (error) {
-    return res.status(500).send({ message: `Server error`, status: 3 });
-  }
-};
-
 export const getReports = async (req: Request, res: Response) => {
   let datalist = await Report.find({});
   type resData = {
     accountReported: any;
     reporter: any;
     reason: any;
-    violateTimes: any;
   };
   let dataReturn: resData[] = [];
   try {
@@ -73,8 +47,7 @@ export const getReports = async (req: Request, res: Response) => {
       let dataRes: resData = {
         accountReported: data.accountReported,
         reporter: data.reporter,
-        reason: data.reason,
-        violateTimes: data.violateTimes
+        reason: data.reason
       };
       let account = await classifyAccount(data.accountReported);
       if (account === false) {
@@ -100,3 +73,20 @@ export const getReports = async (req: Request, res: Response) => {
     return res.status(500).send({ message: `Server error`, status: 3 })
   }
 };
+
+export const deleteReport = async (req: Request, res: Response) => {
+  try {
+    let report = await Report.findById(req.body._id);
+    if (report === null || report === undefined) {
+      return res.status(400).send({ message: `Report not exist`, status: 2 });
+    }
+    let rs = await blackListFunc.addToBlackList(report.accountReported);
+    if (rs === false) { 
+     return res.status(400).send({ message: `Delete has been stopped`, status: 2 });
+    }
+    await Report.findByIdAndDelete(req.body._id);
+    return res.status(200).send({ message: `Delete report success`, status: 1 });
+  } catch (err) {
+    return res.status(500).send({ message: `Server error`, status: 3 })
+  }
+}

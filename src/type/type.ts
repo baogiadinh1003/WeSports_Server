@@ -71,7 +71,6 @@ export type report = {
   accountReported: { type: mongoose.Schema.Types.ObjectId };
   reporter: [{ type: mongoose.Schema.Types.ObjectId }];
   reason: [String];
-  violateTimes: Number;
 };
 
 export type blackList = {

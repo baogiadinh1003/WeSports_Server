@@ -203,6 +203,10 @@ app.get(version + reportEntity + "list", (req, res) => {
 app.post(version + reportEntity + "add", (req, res) => {
   reportRouter.addReport(req, res);
 });
+
+app.post(version + reportEntity + "delete", (req, res) => {
+  reportRouter.deleteReport(req, res);
+});
 /*--------------------------- REPORT API ---------------------------*/
 
 /*------------------------ SEND MAIL VERIFY ------------------------*/
@@ -248,7 +252,6 @@ app.get(version + billEntity + "list", (req, res) => {
 
 /*---------------------------- RUN HOST ----------------------------*/
 app.listen(process.env.PORT || 3000, () => {
-  console.log(`PORT ${process.env.PORT}`);
   console.log(`Server is running`);
 });
 /*---------------------------- RUN HOST ----------------------------*/
