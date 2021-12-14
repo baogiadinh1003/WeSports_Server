@@ -81,7 +81,7 @@ const validateEmail = (inp: String) => {
  * @param inp
  * @returns
  */
-export const isEmpty = (inp: any) => {
+const isEmpty = (inp: any) => {
   if (inp === null || inp === undefined) {
     return true;
   }
@@ -92,4 +92,5 @@ export {
   validateDate,
   validatePhone,
   validateEmail,
+  isEmpty,
 };
