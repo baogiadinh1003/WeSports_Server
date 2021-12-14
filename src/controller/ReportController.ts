@@ -50,7 +50,7 @@ export const getReports = async (req: Request, res: Response) => {
   };
   let dataReturn: resData[] = [];
   try {
-    for (let i: number = 1; i < datalist.length; i++) {
+    for (let i: number = 0; i < datalist.length; i++) {
       let data = datalist[i];
       let dataRes: resData = {
         accountReported: data.accountReported,
