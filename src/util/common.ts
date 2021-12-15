@@ -16,3 +16,20 @@ export const classifyAccount = async (id: any) => {
   }
   return false;
 };
+
+export const convertToMMDDYYYY = (inp: string) => {
+  let day = inp.substring(0,2);
+  let month = inp.substring(3,5);
+  let year = inp.substring(6,inp.length);
+  if (day.indexOf("/") === 0) {
+    day = `0${day.substring(1)}`;
+  }
+  if (month.indexOf("/") === 0) {
+    month = `0${month.substring(1)}`;
+  }
+  return `${month}/${day}/${year}`
+}
+
+export const sortDate = (day1: string, day2: string) => {
+
+}

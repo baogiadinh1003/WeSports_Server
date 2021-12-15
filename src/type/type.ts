@@ -13,6 +13,7 @@ export type renter = {
   renterFbUrl: string;
   renterPassword: string;
   accountStatus: number;
+  renterImage: { type: mongoose.Schema.Types.Array };
   renterDateRegister: string;
 };
 
@@ -24,6 +25,7 @@ export type owner = {
   ownerFbUrl: string;
   ownerEmail: string;
   accountStatus: number;
+  ownerImage: { type: mongoose.Schema.Types.Array };
   ownerDateRegister: string;
 };
 
