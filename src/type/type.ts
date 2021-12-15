@@ -69,9 +69,8 @@ export type price = {
 
 export type report = {
   accountReported: { type: mongoose.Schema.Types.ObjectId };
-  reporter: { type: mongoose.Schema.Types.ObjectId };
-  reason: { type: String; require: true };
-  violateTimes: Number;
+  reporter: [{ type: mongoose.Schema.Types.ObjectId }];
+  reason: [String];
 };
 
 export type blackList = {

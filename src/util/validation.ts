@@ -2,9 +2,6 @@ import { PHONE_REGEX, EMAIL_REGEX } from "./const";
 
 /**
  * Function check validate for date
- *
- * @param inp
- * @returns boolean
  */
 const validateDate = (inp: String) => {
   if (isEmpty(inp)) {
@@ -44,9 +41,6 @@ const validateDate = (inp: String) => {
 
 /**
  * function check validate phone
- *
- * @param inp
- * @returns boolean
  */
 const validatePhone = (inp: String) => {
   if (isEmpty(inp)) {
@@ -60,9 +54,6 @@ const validatePhone = (inp: String) => {
 
 /**
  * function check validate email
- *
- * @param inp
- * @returns
  */
 const validateEmail = (inp: String) => {
   if (isEmpty(inp)) {
@@ -81,7 +72,7 @@ const validateEmail = (inp: String) => {
  * @param inp
  * @returns
  */
-export const isEmpty = (inp: any) => {
+const isEmpty = (inp: any) => {
   if (inp === null || inp === undefined) {
     return true;
   }
@@ -92,4 +83,5 @@ export {
   validateDate,
   validatePhone,
   validateEmail,
+  isEmpty,
 };

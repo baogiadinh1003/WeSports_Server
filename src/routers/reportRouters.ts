@@ -9,6 +9,6 @@ export const addReport = (req: express.Request, res: express.Response) => {
   return ReportController.addReport(req, res);
 };
 
-export const updateReport = (req: express.Request, res: express.Response) => {
-  return ReportController.updateReport(req, res);
-};
+export const deleteReport = (req: express.Request, res: express.Response) => {
+  return ReportController.deleteReport(req, res)
+}

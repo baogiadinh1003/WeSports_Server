@@ -204,8 +204,8 @@ app.post(version + reportEntity + "add", (req, res) => {
   reportRouter.addReport(req, res);
 });
 
-app.post(version + reportEntity + "update", (req, res) => {
-  reportRouter.updateReport(req, res);
+app.post(version + reportEntity + "delete", (req, res) => {
+  reportRouter.deleteReport(req, res);
 });
 /*--------------------------- REPORT API ---------------------------*/
 
