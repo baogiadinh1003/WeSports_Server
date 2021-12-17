@@ -26,12 +26,12 @@ export const sendMail = (
     ">Click here to verify</a>";
   let subject = "Please confirm your Email account";
   if (req.body.reset !== null && req.body.reset !== undefined) {
-    link = "https://we-sports-sv.herokuapp.com/" + "resetpass/confirm?id=" + data.id;
+    link = "https://we-sports-sv.herokuapp.com/" + "resetpass/confirm/" + data.id;
     html =
       "Hello,<br> Your account will be change to:" + "<h2>" + data.pass + "</h2>" + "<br><a href=" + link + "> Click this link for confirm</a>";
     subject = "Reset password WeSport account";
   }
-  
+
 
   let mailOptions = {
     to: req.body.to,
@@ -97,7 +97,7 @@ const resetPasswordRenter = async (
         return res.status(200).send("Account has been banned");
       }
       let newPass = Math.round(Math.random() * 100000000);
-      await sendMail(req, res, {pass: newPass.toString(), id: account._id});
+      await sendMail(req, res, { pass: newPass.toString(), id: account._id });
       return res.status(200).send("0");
     } catch (error) {
       return res.status(500).send("Server error");
@@ -118,7 +118,7 @@ const resetPasswordOwner = async (
         return res.status(200).send("Account has been banned");
       }
       let newPass = Math.round(Math.random() * 100000000);
-      await sendMail(req, res, {pass: newPass.toString(), id: account._id});
+      await sendMail(req, res, { pass: newPass.toString(), id: account._id });
       return res.status(200).send("0");
     } catch (error) {
       return res.status(500).send("Server error");
@@ -129,8 +129,10 @@ const resetPasswordOwner = async (
 };
 
 export const confirmReset = async (req: express.Request, res: express.Response) => {
-  let rsRenter = await Renter.findOne({ renterEmail: req.body.to });
   try {
+    let rsRenter = await Renter.findOne({ _id: req.params.id });
+    console.log(req.body);
+    
     if (rsRenter !== null) {
       if (rsRenter.accountStatus === 3) {
         return res.status(200).send("Account has been banned");
@@ -139,7 +141,7 @@ export const confirmReset = async (req: express.Request, res: express.Response) 
       await rsRenter.updateOne({ renterPassword: newPass.toString() });
       return res.status(200).send("0");
     }
-    let rsOwner = await Owner.findOne({ ownerEmail: req.body.to });
+    let rsOwner = await Owner.findOne({ _id: req.params.id });
     if (rsOwner !== null) {
       if (rsOwner.accountStatus === 3) {
         return res.status(200).send("Account has been banned");
