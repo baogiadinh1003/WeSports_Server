@@ -26,12 +26,11 @@ export const sendMail = (
     ">Click here to verify</a>";
   let subject = "Please confirm your Email account";
   if (req.body.reset !== null && req.body.reset !== undefined) {
-    link = "https://we-sports-sv.herokuapp.com/" + "resetpass/confirm/" + data.id;
+    link = "https://we-sports-sv.herokuapp.com/" + "resetpass/confirm/" + data.id + "/" + data.pass;
     html =
       "Hello,<br> Your account will be change to:" + "<h2>" + data.pass + "</h2>" + "<br><a href=" + link + "> Click this link for confirm</a>";
     subject = "Reset password WeSport account";
   }
-
 
   let mailOptions = {
     to: req.body.to,
@@ -137,8 +136,7 @@ export const confirmReset = async (req: express.Request, res: express.Response) 
       if (rsRenter.accountStatus === 3) {
         return res.status(200).send("Account has been banned");
       }
-      let newPass = Math.round(Math.random() * 100000000);
-      await rsRenter.updateOne({ renterPassword: newPass.toString() });
+      await rsRenter.updateOne({ renterPassword: req.params.pass});
       return res.status(200).send("0");
     }
     let rsOwner = await Owner.findOne({ _id: req.params.id });
@@ -146,8 +144,7 @@ export const confirmReset = async (req: express.Request, res: express.Response) 
       if (rsOwner.accountStatus === 3) {
         return res.status(200).send("Account has been banned");
       }
-      let newPass = Math.round(Math.random() * 100000000);
-      await rsOwner.updateOne({ renterPassword: newPass.toString() });
+      await rsOwner.updateOne({ renterPassword: req.params.pass});
       return res.status(200).send("0");
     }
   }

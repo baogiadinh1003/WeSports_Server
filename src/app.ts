@@ -222,7 +222,7 @@ app.get("/resetpass?", (req, res) => {
   mail.resetPass(req, res);
 });
 
-app.get("/resetpass/confirm/:id", (req, res) => {
+app.get("/resetpass/confirm/:id/:pass", (req, res) => {
   mail.confirmReset(req, res);
 });
 /*------------------------ SEND MAIL VERIFY ------------------------*/
