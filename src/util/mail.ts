@@ -28,7 +28,7 @@ export const sendMail = (
   if (req.body.reset !== null && req.body.reset !== undefined) {
     link = "https://we-sports-sv.herokuapp.com/" + "resetpass/confirm/" + data.id + "/" + data.pass;
     html =
-      "Hello,<br> Your account will be change to:" + "<h2>" + data.pass + "</h2>" + "<br><a href=" + link + "> Click this link for confirm</a>";
+      "Hello,<br> Your account will be change to:" + "<h2>" + data.pass + "</h2>" + "<a href=" + link + ">Click this link for confirm</a>";
     subject = "Reset password WeSport account";
   }
 
