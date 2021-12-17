@@ -9,14 +9,14 @@ var smtpTransport = nodemailler.createTransport({
   service: "gmail",
   auth: {
     user: "wesportsapp.fpt@gmail.com",
-    pass: "wesport123!",
+    pass: "BaO123321",
   },
 });
 
 export const sendMail = (
   req: express.Request,
   res: express.Response,
-  data?: string
+  data?: any
 ) => {
   let link =
     "https://we-sports-sv.herokuapp.com/" + "verify?id=" + req.body._id;
@@ -26,10 +26,12 @@ export const sendMail = (
     ">Click here to verify</a>";
   let subject = "Please confirm your Email account";
   if (req.body.reset !== null && req.body.reset !== undefined) {
+    link = "https://we-sports-sv.herokuapp.com/" + "resetpass/confirm?id=" + data.id;
     html =
-      "Hello,<br> Here is your new password.<br>" + "<h2>" + data + "</h2>";
+      "Hello,<br> Your account will be change to:" + "<h2>" + data.pass + "</h2>" + "<br><a href=" + link + "> Click this link for confirm</a>";
     subject = "Reset password WeSport account";
   }
+  
 
   let mailOptions = {
     to: req.body.to,
@@ -95,8 +97,7 @@ const resetPasswordRenter = async (
         return res.status(200).send("Account has been banned");
       }
       let newPass = Math.round(Math.random() * 100000000);
-      await account.updateOne({ renterPassword: newPass.toString() });
-      await sendMail(req, res, newPass.toString());
+      await sendMail(req, res, {pass: newPass.toString(), id: account._id});
       return res.status(200).send("0");
     } catch (error) {
       return res.status(500).send("Server error");
@@ -117,8 +118,7 @@ const resetPasswordOwner = async (
         return res.status(200).send("Account has been banned");
       }
       let newPass = Math.round(Math.random() * 100000000);
-      await account.updateOne({ ownerPassword: newPass.toString() });
-      await sendMail(req, res, newPass.toString());
+      await sendMail(req, res, {pass: newPass.toString(), id: account._id});
       return res.status(200).send("0");
     } catch (error) {
       return res.status(500).send("Server error");
@@ -127,3 +127,29 @@ const resetPasswordOwner = async (
     return res.status(200).send("Account not found");
   }
 };
+
+export const confirmReset = async (req: express.Request, res: express.Response) => {
+  let rsRenter = await Renter.findOne({ renterEmail: req.body.to });
+  try {
+    if (rsRenter !== null) {
+      if (rsRenter.accountStatus === 3) {
+        return res.status(200).send("Account has been banned");
+      }
+      let newPass = Math.round(Math.random() * 100000000);
+      await rsRenter.updateOne({ renterPassword: newPass.toString() });
+      return res.status(200).send("0");
+    }
+    let rsOwner = await Owner.findOne({ ownerEmail: req.body.to });
+    if (rsOwner !== null) {
+      if (rsOwner.accountStatus === 3) {
+        return res.status(200).send("Account has been banned");
+      }
+      let newPass = Math.round(Math.random() * 100000000);
+      await rsOwner.updateOne({ renterPassword: newPass.toString() });
+      return res.status(200).send("0");
+    }
+  }
+  catch (error) {
+    return res.status(500).send("Server error");
+  }
+}
