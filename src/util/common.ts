@@ -1,6 +1,5 @@
 import { Renter } from "../model/Renter";
 import { Owner } from "../model/Owner";
-import { service } from "../type/type";
 
 export const classifyAccount = async (id: any) => {
   if (id === undefined) {

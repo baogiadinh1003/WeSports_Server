@@ -83,12 +83,6 @@ export type services = {
   serviceList: { type: mongoose.Schema.Types.Array };
 };
 
-export type service = {
-  serviceName: string;
-  servicePrice: Number;
-  serviceAmount?: Number;
-};
-
 export type bill = {
   pitch: { type: mongoose.Schema.Types.ObjectId; ref: "Pitch" };
   renter: { type: mongoose.Schema.Types.ObjectId; ref: "Renter" };
@@ -97,3 +91,10 @@ export type bill = {
   status: { type: mongoose.Schema.Types.Number; default: 1 };
   date: { type: String; required: true };
 };
+
+export type profit = {
+  accountId?: {type: mongoose.Schema.Types.ObjectId; ref: "Owner"};
+  accountTotal: number;
+  accountRealOutput: number;
+  accountAdmin: boolean;
+}

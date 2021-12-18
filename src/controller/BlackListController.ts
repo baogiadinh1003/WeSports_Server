@@ -24,7 +24,6 @@ export const addToBlackList = async (id: any) => {
     let rsUpdate = await bl.save();
     return rsUpdate;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };

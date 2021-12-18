@@ -8,6 +8,7 @@ import * as pitchRouter from "./routers/pitchRouters";
 import * as blackListRouter from "./routers/blackListRouters";
 import * as reportRouter from "./routers/reportRouters";
 import * as billRounter from "./routers/billRouters";
+import * as profitRouter from "./routers/profitsRouters";
 import * as mail from "./util/mail";
 import session = require("express-session");
 import passport = require("passport");
@@ -208,6 +209,16 @@ app.post(version + reportEntity + "delete", (req, res) => {
   reportRouter.deleteReport(req, res);
 });
 /*--------------------------- REPORT API ---------------------------*/
+/*--------------------------- PROFIT API ---------------------------*/
+const profitEntity = "profit/";
+app.post(version + profitEntity + "list", (req, res) => {
+  profitRouter.getProfitsByOwner(req, res);
+});
+
+app.post(version + profitEntity + "admin", (req, res) => {
+  profitRouter.getAdminProfits(req, res);
+});
+/*--------------------------- PROFIT  API ---------------------------*/
 
 /*------------------------ SEND MAIL VERIFY ------------------------*/
 app.post("/sendmail", (req, res) => {

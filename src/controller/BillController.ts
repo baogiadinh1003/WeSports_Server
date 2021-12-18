@@ -3,6 +3,7 @@ import { Bill } from "../model/Bill";
 import { Pitch } from "../model/Pitch";
 import { Renter } from "../model/Renter";
 import { convertToMMDDYYYY } from "../util/common";
+import { addOrUpdateProfits } from '../controller/ProfitController';
 
 /**
  * Add new bill
@@ -34,6 +35,10 @@ export const addBill = async (req: Request, res: Response) => {
             return res.status(400).send({ message: `Pitch not found`, status: 2 })
         }
         let bill = new Bill(req.body);
+        let rs = await addOrUpdateProfits(pitch.pitchOwner, Number(bill.total));
+        if (rs === false) {
+            return res.status(400).send({ message: `Process error`, status: 2 })
+        }
         let result = await bill.save();
         return res.status(200).send({ message: `Add bill success`, status: 1, data: result })
     } catch (error) {
@@ -57,7 +62,7 @@ export const getBills = async (req: Request, res: Response) => {
             if (date1 > date2) {
                 return 1;
             }
-            
+
             return 0;
         });
         return res.status(200).send({ message: `Get all bill`, status: 1, data: bills })
@@ -115,7 +120,7 @@ export const getBillsFromRenter = async (req: Request, res: Response) => {
             if (date1 > date2) {
                 return 1;
             }
-            
+
             return 0;
         });
         return res.status(200).send({ message: `Get all bill from renter id: ${req.body._id}`, status: 1, data: bills })
