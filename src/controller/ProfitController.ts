@@ -43,7 +43,7 @@ export const addOrUpdateProfits = async (id: any, total: number) => {
         } else {
             profits.accountTotal += total;
             profits.accountRealOutput += (total / 100 * 90);
-            profits.save();
+            await profits.save();
         }
         return true;
     } catch (error) {
