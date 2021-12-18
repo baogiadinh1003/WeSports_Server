@@ -136,7 +136,7 @@ export const getBillsFromRenter = async (req: Request, res: Response) => {
 export const updateBill = async (req: Request, res: Response) => {
     try {
         let bill = await Bill.findById(req.body._id);
-        if (bill !== null && req.body.status === 3 && (req.body.rating !== null || req.body.rating !== undefined)) {
+        if (bill !== null && req.body.status === 3) {
             let ratingRs = await addRating(bill.renter, bill.pitch, req.body.rating, req.body.comment);
             if (ratingRs === false) {
                 return res.status(500).send({ message: `Process has been error`, status: 2 });
