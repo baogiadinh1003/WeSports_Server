@@ -54,6 +54,7 @@ export type pitch = {
   pitchImage: { type: mongoose.Schema.Types.Array };
   pitchOwner: { type: mongoose.Schema.Types.ObjectId; ref: "Owner" };
   pitchStatus: number;
+  pitchRating: number;
 };
 
 export type price = {
@@ -86,9 +87,10 @@ export type services = {
 export type bill = {
   pitch: { type: mongoose.Schema.Types.ObjectId; ref: "Pitch" };
   renter: { type: mongoose.Schema.Types.ObjectId; ref: "Renter" };
+  rating: { type: mongoose.Schema.Types.ObjectId; ref: "Rating" };
   timeRent: Array<any>;
   total: { type: mongoose.Schema.Types.Number; required: true };
-  status: { type: mongoose.Schema.Types.Number; default: 1 };
+  status: number;
   date: { type: String; required: true };
 };
 
@@ -97,4 +99,12 @@ export type profit = {
   accountTotal: number;
   accountRealOutput: number;
   accountAdmin: boolean;
+}
+
+export type rating = {
+  renterId: { type: mongoose.Schema.Types.ObjectId; ref: "Renter" };
+  pitchId: { type: mongoose.Schema.Types.ObjectId; ref: "Pitch" };
+  ratingStar: number;
+  comment: string;
+  date: string;
 }

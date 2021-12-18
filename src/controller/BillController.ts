@@ -4,6 +4,7 @@ import { Pitch } from "../model/Pitch";
 import { Renter } from "../model/Renter";
 import { convertToMMDDYYYY } from "../util/common";
 import { addOrUpdateProfits } from '../controller/ProfitController';
+import { addRating } from '../controller/RatingController'
 
 /**
  * Add new bill
@@ -134,7 +135,14 @@ export const getBillsFromRenter = async (req: Request, res: Response) => {
  */
 export const updateBill = async (req: Request, res: Response) => {
     try {
-        let bill = await Bill.findByIdAndUpdate(req.body._id, req.body);
+        let bill = await Bill.findById(req.body._id);
+        if (bill !== null && req.body.status === 2 && (req.body.rating !== null || req.body.rating !== undefined)) {
+            let ratingRs = await addRating(bill.renter, bill.pitch, req.body.rating, req.body.comment);
+            if (ratingRs === false) {
+                return res.status(500).send({ message: `Process has been error`, status: 2 });
+            }
+        }
+        let rs = await Bill.findByIdAndUpdate(req.body._id, req.body);
         return res.status(200).send({ message: `Update bill success`, status: 1, data: bill });
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 });

@@ -37,6 +37,7 @@ const pitchSchema = new mongoose.Schema<type.pitch>({
     required: true,
   },
   pitchStatus: { type: Number, unique: false, default: 1, required: true },
+  pitchRating: { type: Number },
 });
 
 export const Pitch = mongoose.model<type.pitch>("Pitch", pitchSchema);

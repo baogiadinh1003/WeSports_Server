@@ -215,7 +215,7 @@ app.post(version + profitEntity + "list", (req, res) => {
   profitRouter.getProfitsByOwner(req, res);
 });
 
-app.post(version + profitEntity + "admin", (req, res) => {
+app.get(version + profitEntity + "admin", (req, res) => {
   profitRouter.getAdminProfits(req, res);
 });
 /*--------------------------- PROFIT  API ---------------------------*/
