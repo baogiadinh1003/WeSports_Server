@@ -9,6 +9,7 @@ import * as blackListRouter from "./routers/blackListRouters";
 import * as reportRouter from "./routers/reportRouters";
 import * as billRounter from "./routers/billRouters";
 import * as profitRouter from "./routers/profitsRouters";
+import * as ratingRouter from "./routers/ratingRouters";
 import * as mail from "./util/mail";
 import session = require("express-session");
 import passport = require("passport");
@@ -264,6 +265,13 @@ app.get(version + billEntity + "list", (req, res) => {
   billRounter.getAll(req, res);
 });
 /*------------------------------ BILL ------------------------------*/
+
+/*----------------------------- RATING -----------------------------*/
+const ratingEntity = "rating/";
+app.post(version + ratingEntity + "list", (req, res) => {
+  ratingRouter.getAllRatingByPitchId(req, res);
+});
+/*----------------------------- RATING -----------------------------*/
 
 /*---------------------------- RUN HOST ----------------------------*/
 app.listen(process.env.PORT || 3000, () => {
