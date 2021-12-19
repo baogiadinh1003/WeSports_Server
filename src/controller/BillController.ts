@@ -143,7 +143,8 @@ export const updateBill = async (req: Request, res: Response) => {
             }
         }
         let rs = await Bill.findByIdAndUpdate(req.body._id, req.body);
-        return res.status(200).send({ message: `Update bill success`, status: 1, data: bill });
+        let result = await Bill.findById(req.body._id);
+        return res.status(200).send({ message: `Update bill success`, status: 1, data: result });
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 });
     }
