@@ -230,7 +230,7 @@ app.get("/verify?", (req, res) => {
   mail.verifyEmail(req, res);
 });
 
-app.get("/resetpass?", (req, res) => {
+app.post("/resetpass?", (req, res) => {
   mail.resetPass(req, res);
 });
 
