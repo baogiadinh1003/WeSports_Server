@@ -172,7 +172,7 @@ app.post(version + pitchEntity + "list", (req, res) => {
   pitchRouter.pitchList(req, res);
 });
 
-app.get(version + pitchEntity + "item", (req, res) => {
+app.post(version + pitchEntity + "item", (req, res) => {
   pitchRouter.pitchItem(req, res);
 });
 
