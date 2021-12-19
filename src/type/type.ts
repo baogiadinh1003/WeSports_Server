@@ -30,10 +30,10 @@ export type owner = {
 };
 
 export type address = {
-  addressCity: { type: Object; required: true };
-  addressDistrict: { type: Object; required: true };
+  addressCity: any;
+  addressDistrict: any;
   addressStreet: string;
-  addressLocation: { type: Object };
+  addressLocation: any;
 };
 
 export type pitch = {
@@ -95,7 +95,7 @@ export type bill = {
 };
 
 export type profit = {
-  accountId?: {type: mongoose.Schema.Types.ObjectId; ref: "Owner"};
+  accountId?: { type: mongoose.Schema.Types.ObjectId; ref: "Owner" };
   accountTotal: number;
   accountRealOutput: number;
   accountAdmin: boolean;

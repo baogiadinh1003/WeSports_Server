@@ -131,12 +131,12 @@ export const confirmReset = async (req: express.Request, res: express.Response) 
   try {
     let rsRenter = await Renter.findOne({ _id: req.params.id });
     console.log(req.body);
-    
+
     if (rsRenter !== null) {
       if (rsRenter.accountStatus === 3) {
         return res.status(200).send("Account has been banned");
       }
-      await rsRenter.updateOne({ renterPassword: req.params.pass});
+      await rsRenter.updateOne({ renterPassword: req.params.pass });
       return res.status(200).send("0");
     }
     let rsOwner = await Owner.findOne({ _id: req.params.id });
@@ -144,7 +144,7 @@ export const confirmReset = async (req: express.Request, res: express.Response) 
       if (rsOwner.accountStatus === 3) {
         return res.status(200).send("Account has been banned");
       }
-      await rsOwner.updateOne({ renterPassword: req.params.pass});
+      await rsOwner.updateOne({ renterPassword: req.params.pass });
       return res.status(200).send("0");
     }
   }

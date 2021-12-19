@@ -31,21 +31,21 @@ export const updateAddress = async (id: any, data: address) => {
 export const getAddressWithFilter = async (filter: addressType) => {
   let filterUse: any = {};
   if (filter.addressCity !== undefined && filter.addressCity !== null) {
-    filterUse.addressCity = { code: null, slug: null, name_with_type: null, name: null, type: null };
+    filterUse.addressCity = { code: null, name: null, name_with_type: null, slug: null, type: null };
     filterUse.addressCity.code = filter.addressCity.code;
-    filterUse.addressCity.slug = filter.addressCity.slug;
-    filterUse.addressCity.name_with_type = filter.addressCity.name_with_type;
     filterUse.addressCity.name = filter.addressCity.name;
+    filterUse.addressCity.name_with_type = filter.addressCity.name_with_type;
+    filterUse.addressCity.slug = filter.addressCity.slug;
     filterUse.addressCity.type = filter.addressCity.type;
   }
 
   if (filter.addressDistrict !== undefined && filter.addressDistrict !== null) {
-    filterUse.addressDistrict = { code: null, parent_code: null, slug: null, name_with_type: null, name: null };
+    filterUse.addressDistrict = { code: null, name: null, name_with_type: null, parent_code: null, slug: null };
     filterUse.addressDistrict.code = filter.addressDistrict.code;
+    filterUse.addressDistrict.name = filter.addressDistrict.name;
+    filterUse.addressDistrict.name_with_type = filter.addressDistrict.name_with_type;
     filterUse.addressDistrict.parent_code = filter.addressDistrict.parent_code;
     filterUse.addressDistrict.slug = filter.addressDistrict.slug;
-    filterUse.addressDistrict.name_with_type = filter.addressDistrict.name_with_type;
-    filterUse.addressDistrict.name = filter.addressDistrict.name;
   }
 
   if (filter.addressStreet !== undefined && filter.addressStreet !== null) {
@@ -53,11 +53,11 @@ export const getAddressWithFilter = async (filter: addressType) => {
   }
 
   if (filter.addressLocation !== undefined && filter.addressLocation !== null) {
-    filterUse.addressLocation = { longitude: null, latitude: null };
+    filterUse.addressLocation = { latitude: null, longitude: null };
     filterUse.addressLocation.longitude = filter.addressLocation.longitude;
     filterUse.addressLocation.latitude = filter.addressLocation.latitude;
   }
-
+  let test = await Address.find({ addressCity: { code: "48", name: "Đà Nẵng", name_with_type: "Thành phố Đà Nẵng", slug: 'da-nang', type: 'thanh-pho' } });
   let addresses = await Address.find(filterUse);
   return addresses;
 };

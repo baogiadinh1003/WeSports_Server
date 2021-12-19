@@ -19,7 +19,7 @@ export const postAdd = async (req: Request, res: Response) => {
     let result = await (await pitch.save()).populate({ path: "pitchAddress" });
     return res.status(200).send({ message: `Add pitch success`, data: result, status: 1 });
   } catch (error: any) {
-    
+
     if (isEmpty(error.errors.pitchOwner) === false) {
       return res.status(400).send({ message: `Pitch owner not exist`, status: 2 });
     }
@@ -35,13 +35,13 @@ export const getAllPitch = async (req: Request, res: Response) => {
     let pitchs = await Pitch.find({})
       .populate({ path: "pitchOwner" })
       .populate({ path: "pitchAddress" })
-    if (isEmpty(req.body) === true) {
-      return res.status(200).send({message: `Get all pitch success`, status: 1, data: pitchs});
+    if (req.body === null || req.body === undefined) {
+      return res.status(200).send({ message: `Get all pitch success`, status: 1, data: pitchs });
     } else {
       let addresses = await AddressFunc.getAddressWithFilter(req.body);
       let pitchFilter: pitch[] = [];
       if (addresses.length === 0) {
-        return res.status(400).send({message: `Get all pitch success`, status: 2, data: pitchFilter});
+        return res.status(400).send({ message: `Get all pitch success`, status: 2, data: pitchFilter });
       }
       for (let i = 0; i < pitchs.length; i++) {
         let dummyPitch: any = pitchs[i];
