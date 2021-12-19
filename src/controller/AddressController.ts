@@ -57,7 +57,7 @@ export const getAddressWithFilter = async (filter: addressType) => {
     filterUse.addressLocation.longitude = filter.addressLocation.longitude;
     filterUse.addressLocation.latitude = filter.addressLocation.latitude;
   }
-  let test = await Address.find({ addressCity: { code: "48", name: "Đà Nẵng", name_with_type: "Thành phố Đà Nẵng", slug: 'da-nang', type: 'thanh-pho' } });
+  
   let addresses = await Address.find(filterUse);
   return addresses;
 };

@@ -1,28 +1,27 @@
 {
-  "account": [
-    {
-      "username": "DATPD04156",
-      "password": "4156"
-    },
-    {
-      "username": "HAIPD04043",
-      "password": "4043"
-    },
-    {
-      "username": "CUONGPH11594",
-      "password": "11594"
-    },
-    {
-      "username": "BAOPD03125",
-      "password": "3125"
-    },
-    {
-      "username": "VIETPD03761",
-      "password": "3761"
-    },
-    {
-      "username": "QUOCPD03490",
-      "password": "3490"
-    }
-  ]
+    "account": [{
+            "username": "DATPD04156",
+            "password": "4156"
+        },
+        {
+            "username": "HAIPD04043",
+            "password": "4043"
+        },
+        {
+            "username": "CUONGPH11594",
+            "password": "11594"
+        },
+        {
+            "username": "BAOPD03125",
+            "password": "3125"
+        },
+        {
+            "username": "VIETPD03761",
+            "password": "3761"
+        },
+        {
+            "username": "QUOCPD03490",
+            "password": "3490"
+        }
+    ]
 }
