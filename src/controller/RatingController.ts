@@ -8,7 +8,7 @@ export const addRating = async (renterId: any, pitchId: any, ratingStar: number,
         rating.renterId = renterId;
         rating.pitchId = pitchId;
         rating.ratingStar = ratingStar;
-        rating.comment = comment;
+        rating.comment = comment === null? "":comment;
         let today = new Date();
         let dd = String(today.getDate()).padStart(2, '0');
         let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
