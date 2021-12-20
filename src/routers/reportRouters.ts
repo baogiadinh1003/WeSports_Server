@@ -12,3 +12,7 @@ export const addReport = (req: express.Request, res: express.Response) => {
 export const deleteReport = (req: express.Request, res: express.Response) => {
   return ReportController.deleteReport(req, res)
 }
+
+export const removeReport = (req: express.Request, res: express.Response) => {
+  return ReportController.removeReport(req, res)
+}

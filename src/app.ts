@@ -209,6 +209,10 @@ app.post(version + reportEntity + "add", (req, res) => {
 app.post(version + reportEntity + "delete", (req, res) => {
   reportRouter.deleteReport(req, res);
 });
+
+app.post(version + reportEntity + "remove", (req, res) => {
+  reportRouter.removeReport(req, res);
+});
 /*--------------------------- REPORT API ---------------------------*/
 /*--------------------------- PROFIT API ---------------------------*/
 const profitEntity = "profit/";
