@@ -18,11 +18,16 @@ export const addRating = async (renterId: any, pitchId: any, ratingStar: number,
         let ratingList = await Rating.find({ pitchId: pitchId });
         if (ratingList !== null) {
             let sum = 0;
+            let amount = ratingList.length;
             for (let index = 0; index < ratingList.length; index++) {
                 const element = ratingList[index];
+                if (element.ratingStar == 0) {
+                    amount--;
+                    continue;
+                }
                 sum += element.ratingStar;
             }
-            let avg = sum / ratingList.length;
+            let avg = sum / amount;
             Pitch.findByIdAndUpdate(pitchId, { pitchRating: avg })
             return rs
         }
