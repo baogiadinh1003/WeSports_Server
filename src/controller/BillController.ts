@@ -6,7 +6,6 @@ import { convertToMMDDYYYY } from "../util/common";
 import { addOrUpdateProfits } from '../controller/ProfitController';
 import { addRating } from '../controller/RatingController'
 import { Rating } from "../model/Rating";
-import { kStringMaxLength } from "buffer";
 
 /**
  * Add new bill
@@ -47,8 +46,8 @@ export const addBill = async (req: Request, res: Response) => {
             return res.status(500).send({ message: `Process has been error`, status: 2 });
         }
         bill.rating = ratingRs._id;
-        let result = await bill.save();
-
+        let result: any = await bill.save();
+        result.rating = ratingRs;
         return res.status(200).send({ message: `Add bill success`, status: 1, data: result })
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 })
