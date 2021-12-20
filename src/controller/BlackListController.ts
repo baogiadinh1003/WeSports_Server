@@ -1,26 +1,31 @@
 import { BlackList } from "../model/BlackList";
-import { postUpdateRenter } from "../controller/RenterController";
-import { postUpdateOwner } from "../controller/OwnerController"
 import express from "express";
 import { classifyAccount } from "../util/common";
 
 export const addToBlackList = async (id: any) => {
   try {
-    let bl = await BlackList.findOne({accountId: id}); 
+    let bl = await BlackList.findOne({ accountId: id });
     if (bl === null || bl === undefined) {
       let newBl = new BlackList();
       newBl.accountId = id;
       let rs = await newBl.save();
+
+      let account = await classifyAccount(newBl.accountId);
+      if (account === false) {
+        return false;
+      }
+      account.accountStatus = 3
+      await account.save();
       return rs;
     }
+
     let account = await classifyAccount(bl.accountId);
     if (account === false) {
-      console.log('fail');
       return false;
     }
     account.accountStatus = 3
     await account.save();
-    
+
     let rsUpdate = await bl.save();
     return rsUpdate;
   } catch (error) {
@@ -40,7 +45,7 @@ export const getAccountInBlackList = async (
   } catch (error) {
     return res
       .status(500)
-      .send({ message: `Server error`, status: 3});
+      .send({ message: `Server error`, status: 3 });
   }
-  
+
 };
