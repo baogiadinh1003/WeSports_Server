@@ -51,13 +51,13 @@ export const postRegister = async (req: Request, res: Response) => {
       .status(200)
       .send({ message: `Sign up success`, data: result, status: 0 });
   } catch (error: any) {
-    if (error.keyValue.renterUsername !== null || error.keyValue.renterUsername !== undefined) {
+    if (error.keyValue.renterUsername !== null && error.keyValue.renterUsername !== undefined) {
       return res.status(400).send({ message: `Username is duplicate`, status: 4 });
     }
-    if (error.keyValue.renterPhone !== null || error.keyValue.renterPhone !== undefined) {
+    if (error.keyValue.renterPhone !== null && error.keyValue.renterPhone !== undefined) {
       return res.status(400).send({ message: `Phone number is duplicate`, status: 4 });
     }
-    if (error.keyValue.renterEmail !== null || error.keyValue.renterEmail !== undefined) {
+    if (error.keyValue.renterEmail !== null && error.keyValue.renterEmail !== undefined) {
       return res.status(400).send({ message: `Email is duplicate`, status: 4 });
     }
     return res.status(500).send({ message: `Sign up fail"`, status: 1 });
@@ -105,13 +105,13 @@ export const postUpdateRenter = async (req: Request, res: Response) => {
     }
     return res.status(200).send({ message: `Update success`, status: 1 });
   } catch (error: any) {
-    if (error.keyValue.renterUsername !== null || error.keyValue.renterUsername !== undefined) {
+    if (error.keyValue.renterUsername !== null && error.keyValue.renterUsername !== undefined) {
       return res.status(400).send({ message: `Username is duplicate`, status: 4 });
     }
-    if (error.keyValue.renterPhone !== null || error.keyValue.renterPhone !== undefined) {
+    if (error.keyValue.renterPhone !== null && error.keyValue.renterPhone !== undefined) {
       return res.status(400).send({ message: `Phone number is duplicate`, status: 4 });
     }
-    if (error.keyValue.renterEmail !== null || error.keyValue.renterEmail !== undefined) {
+    if (error.keyValue.renterEmail !== null && error.keyValue.renterEmail !== undefined) {
       return res.status(400).send({ message: `Email is duplicate`, status: 4 });
     }
     return res.sendStatus(500).send({ message: `Server error`, status: 3 });
