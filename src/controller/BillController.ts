@@ -144,7 +144,7 @@ export const updateBill = async (req: Request, res: Response) => {
             bill.rating = ratingRs._id;
         }
         let rs = await Bill.findByIdAndUpdate(req.body._id, req.body);
-        let result = await Bill.findById(req.body._id);
+        let result = await Bill.findById(req.body._id).populate({path:"Rating"});
         return res.status(200).send({ message: `Update bill success`, status: 1, data: result });
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 });
