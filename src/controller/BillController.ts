@@ -73,7 +73,14 @@ export const getBills = async (req: Request, res: Response) => {
 
             return 0;
         });
-        return res.status(200).send({ message: `Get all bill`, status: 1, data: bills })
+        let rsData = []
+        for (let index = 0; index < bills.length; index++) {
+            const element: any = bills[index];
+            let rate = await Rating.findById(element.rating);
+            element.rating = rate;
+            rsData.push(element);
+        }
+        return res.status(200).send({ message: `Get all bill`, status: 1, data: rsData })
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 });
     }
@@ -102,7 +109,14 @@ export const getBillsFromPitch = async (req: Request, res: Response) => {
 
             return 0;
         });
-        return res.status(200).send({ message: `Get all bill from pitch id: ${req.body._id}`, status: 1, data: bills })
+        let rsData = []
+        for (let index = 0; index < bills.length; index++) {
+            const element: any = bills[index];
+            let rate = await Rating.findById(element.rating);
+            element.rating = rate;
+            rsData.push(element);
+        }
+        return res.status(200).send({ message: `Get all bill from pitch id: ${req.body._id}`, status: 1, data: rsData })
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 });
     }
