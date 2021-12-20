@@ -14,7 +14,7 @@ export const addRating = async (renterId: any, pitchId: any, ratingStar: number,
         let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         let yyyy = today.getFullYear();
         rating.date = dd + "/" + mm + '/' + yyyy;
-        await rating.save();
+        let rs = await rating.save();
         let ratingList = await Rating.find({ pitchId: pitchId });
         if (ratingList !== null) {
             let sum = 0;
@@ -24,9 +24,9 @@ export const addRating = async (renterId: any, pitchId: any, ratingStar: number,
             }
             let avg = sum / ratingList.length;
             Pitch.findByIdAndUpdate(pitchId, { pitchRating: avg })
-            return true
+            return rs
         }
-        return true;
+        return rs;
     } catch (error) {
         return false;
     }

@@ -8,6 +8,7 @@ const billSchema = new mongoose.Schema<type.bill>({
   total: { type: mongoose.Schema.Types.Number, required: true },
   status: { type: Number, default: 1, required: true },
   date: { type: String, required: true },
+  rating: { type: mongoose.Schema.Types.ObjectId, ref: "Rating" }
 });
 
 export const Bill = mongoose.model<type.bill>("Bill", billSchema);

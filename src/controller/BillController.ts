@@ -141,6 +141,7 @@ export const updateBill = async (req: Request, res: Response) => {
             if (ratingRs === false) {
                 return res.status(500).send({ message: `Process has been error`, status: 2 });
             }
+            bill.rating = ratingRs._id;
         }
         let rs = await Bill.findByIdAndUpdate(req.body._id, req.body);
         let result = await Bill.findById(req.body._id);
