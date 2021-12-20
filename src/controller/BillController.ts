@@ -110,7 +110,7 @@ export const getBillsFromRenter = async (req: Request, res: Response) => {
         if (renter === null || renter === undefined) {
             return res.status(400).send({ message: `Pitch not found`, status: 2 })
         }
-        let bills = await Bill.find({ renter: req.body._id });
+        let bills = await Bill.find({ renter: req.body._id }).populate({path:"Rating"});
         bills.sort((e1: any, e2: any) => {
             let date1: number = Date.parse(convertToMMDDYYYY(e1.date));
             let date2: number = Date.parse(convertToMMDDYYYY(e2.date));
