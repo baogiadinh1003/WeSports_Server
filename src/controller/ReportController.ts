@@ -93,6 +93,10 @@ export const deleteReport = async (req: Request, res: Response) => {
 
 export const removeReport = async (req: Request, res: Response) => {
   try {
+    let report = await Report.findOne({ accountReported: req.body._id });
+    if (report === null || report === undefined) {
+      return res.status(400).send({ message: `Report not exist`, status: 2 });
+    }
     await Report.findOneAndDelete({ accountReported: req.body._id });
     return res.status(200).send({ message: `Delete report success`, status: 1 });
   } catch (err) {
