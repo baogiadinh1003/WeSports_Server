@@ -9,7 +9,7 @@ const ownerSchema = new mongoose.Schema<type.owner>({
   ownerFbUrl: { type: String, unique: true, required: false, sparse: true },
   ownerEmail: { type: String, unique: true, required: true},
   accountStatus: { type: Number, unique: false, default: 1, required: true },
-  ownerImage: { type: mongoose.Schema.Types.Array },
+  ownerImage: { type: String },
   ownerDateRegister: { type: String },
 });
 

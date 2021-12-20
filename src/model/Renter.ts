@@ -9,7 +9,7 @@ const renterSchema = new mongoose.Schema<type.renter>({
   renterFbUrl: { type: String, unique: false, required: false, sparse: true },
   renterPassword: { type: String, unique: false, required: true },
   accountStatus: { type: Number, unique: false, default: 1, required: true },
-  renterImage: { type: mongoose.Schema.Types.Array },
+  renterImage: { type: String },
   renterDateRegister: { type: String, required: true },
 });
 
