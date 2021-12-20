@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Owner } from "../model/Owner";
+import { Pitch } from "../model/Pitch";
 import {
   validatePhone,
   validateEmail,
@@ -90,11 +91,6 @@ export const getAllOwner = async (req: Request, res: Response) => {
  * function update owner
  */
 export const postUpdateOwner = async (req: Request, res: Response) => {
-  if (
-    !validatePhone(req.body.ownerPhone)
-  ) {
-    return res.status(400).send({ message: `Validation fail`, status: 4 });
-  }
   try {
     let owner = await Owner.findByIdAndUpdate(req.body._id, req.body, {
       new: false,
@@ -103,7 +99,19 @@ export const postUpdateOwner = async (req: Request, res: Response) => {
       return res.status(200).send({ message: `Update error`, status: 2 });
     }
     return res.status(200).send({ message: `Update success`, status: 1 });
-  } catch (error) {
+  } catch (error: any) {
+    if (error.keyValue.ownerUserName !== null || error.keyValue.ownerUserName !== undefined) {
+      return res.status(400).send({ message: `Username is duplicate`, status: 4 });
+    }
+    if (error.keyValue.ownerPhone !== null || error.keyValue.ownerPhone !== undefined) {
+      return res.status(400).send({ message: `Phone number is duplicate`, status: 4 });
+    }
+    if (error.keyValue.ownerFbUrl !== null || error.keyValue.ownerFbUrl !== undefined) {
+      return res.status(400).send({ message: `Facebook url is using`, status: 4 });
+    }
+    if (error.keyValue.ownerEmail !== null || error.keyValue.ownerEmail !== undefined) {
+      return res.status(400).send({ message: `Email is duplicate`, status: 4 });
+    }
     return res.status(500).send({ message: `Server error`, status: 3 });
   }
 };
@@ -111,8 +119,15 @@ export const postUpdateOwner = async (req: Request, res: Response) => {
 /**
  * function delete owner
  */
-export const postDeleteOwner = (req: Request, res: Response) => {
+export const postDeleteOwner = async (req: Request, res: Response) => {
   try {
+    let owner = await Owner.findById(req.body.id);
+    if (owner !== null) {
+      let rs = Pitch.find({ pitchOwner: owner._id });
+      if (rs !== null) {
+        await Pitch.deleteMany({ pitchOwner: owner._id })
+      }
+    }
     Owner.findByIdAndDelete(req.body._id, (err: Error, res: any) => {
       if (err) {
         return res.status(400).send({ message: `Delete error`, status: 2 });
