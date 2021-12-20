@@ -50,7 +50,19 @@ export const postRegister = async (req: Request, res: Response) => {
     return res
       .status(200)
       .send({ message: "Sign up success", data: result, status: 1 });
-  } catch (error) {
+  } catch (error: any) {
+    if (error.keyValue.ownerUserName !== null || error.keyValue.ownerUserName !== undefined) {
+      return res.status(400).send({ message: `Username is duplicate`, status: 4 });
+    }
+    if (error.keyValue.ownerPhone !== null || error.keyValue.ownerPhone !== undefined) {
+      return res.status(400).send({ message: `Phone number is duplicate`, status: 4 });
+    }
+    if (error.keyValue.ownerFbUrl !== null || error.keyValue.ownerFbUrl !== undefined) {
+      return res.status(400).send({ message: `Facebook url is using`, status: 4 });
+    }
+    if (error.keyValue.ownerEmail !== null || error.keyValue.ownerEmail !== undefined) {
+      return res.status(400).send({ message: `Email is duplicate`, status: 4 });
+    }
     return res.status(500).send({ message: "Server error", status: 3 });
   }
 };
