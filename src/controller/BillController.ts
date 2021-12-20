@@ -159,6 +159,21 @@ export const updateBill = async (req: Request, res: Response) => {
                 rate.ratingStar = req.body.ratingStar;
                 rate.save();
             }
+            let ratingList = await Rating.find({ pitchId: bill.pitch });
+            if (ratingList !== null) {
+                let sum = 0;
+                let amount = ratingList.length;
+                for (let index = 0; index < ratingList.length; index++) {
+                    const element = ratingList[index];
+                    if (element.ratingStar == 0) {
+                        amount--;
+                        continue;
+                    }
+                    sum += element.ratingStar;
+                }
+                let avg = sum / amount;
+                await Pitch.findByIdAndUpdate(bill.pitch, { pitchRating: avg });
+            }
         }
         let rs = await Bill.findByIdAndUpdate(req.body._id, req.body);
         let result = await Bill.findById(req.body._id);
@@ -166,7 +181,8 @@ export const updateBill = async (req: Request, res: Response) => {
         if (result !== null) {
             returnData.rating = rate;
         }
-        
+
+
         return res.status(200).send({ message: `Update bill success`, status: 1, data: returnData });
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 });
