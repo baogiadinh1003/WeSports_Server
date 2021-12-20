@@ -5,6 +5,8 @@ import { Renter } from "../model/Renter";
 import { convertToMMDDYYYY } from "../util/common";
 import { addOrUpdateProfits } from '../controller/ProfitController';
 import { addRating } from '../controller/RatingController'
+import { Rating } from "../model/Rating";
+import { kStringMaxLength } from "buffer";
 
 /**
  * Add new bill
@@ -40,7 +42,13 @@ export const addBill = async (req: Request, res: Response) => {
         if (rs === false) {
             return res.status(400).send({ message: `Process error`, status: 2 })
         }
+        let ratingRs = await addRating(req.body.renter, req.body.pitch, 0, "");
+        if (ratingRs === false) {
+            return res.status(500).send({ message: `Process has been error`, status: 2 });
+        }
+        bill.rating = ratingRs._id;
         let result = await bill.save();
+
         return res.status(200).send({ message: `Add bill success`, status: 1, data: result })
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 })
@@ -110,7 +118,7 @@ export const getBillsFromRenter = async (req: Request, res: Response) => {
         if (renter === null || renter === undefined) {
             return res.status(400).send({ message: `Pitch not found`, status: 2 })
         }
-        let bills = await Bill.find({ renter: req.body._id }).populate({path:"Rating"});
+        let bills = await Bill.find({ renter: req.body._id });
         bills.sort((e1: any, e2: any) => {
             let date1: number = Date.parse(convertToMMDDYYYY(e1.date));
             let date2: number = Date.parse(convertToMMDDYYYY(e2.date));
@@ -124,7 +132,14 @@ export const getBillsFromRenter = async (req: Request, res: Response) => {
 
             return 0;
         });
-        return res.status(200).send({ message: `Get all bill from renter id: ${req.body._id}`, status: 1, data: bills })
+        let rsData = []
+        for (let index = 0; index < bills.length; index++) {
+            const element: any = bills[index];
+            let rate = await Rating.findById(element.rating);
+            element.rating = rate;
+            rsData.push(element);
+        }
+        return res.status(200).send({ message: `Get all bill from renter id: ${req.body._id}`, status: 1, data: rsData })
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 })
     }
@@ -135,17 +150,24 @@ export const getBillsFromRenter = async (req: Request, res: Response) => {
  */
 export const updateBill = async (req: Request, res: Response) => {
     try {
+        let rate: any;
         let bill = await Bill.findById(req.body._id);
         if (bill !== null && req.body.status === 3) {
-            let ratingRs = await addRating(bill.renter, bill.pitch, req.body.rating, req.body.comment);
-            if (ratingRs === false) {
-                return res.status(500).send({ message: `Process has been error`, status: 2 });
+            rate = await Rating.findById(bill.rating);
+            if (rate !== null) {
+                rate.comment = req.body.comment;
+                rate.ratingStar = req.body.ratingStar;
+                rate.save();
             }
-            bill.rating = ratingRs._id;
         }
         let rs = await Bill.findByIdAndUpdate(req.body._id, req.body);
-        let result = await Bill.findById(req.body._id).populate({path:"Rating"});
-        return res.status(200).send({ message: `Update bill success`, status: 1, data: result });
+        let result = await Bill.findById(req.body._id);
+        let returnData: any = result;
+        if (result !== null) {
+            returnData.rating = rate;
+        }
+        
+        return res.status(200).send({ message: `Update bill success`, status: 1, data: returnData });
     } catch (error) {
         return res.status(500).send({ message: `Server error`, status: 3 });
     }
